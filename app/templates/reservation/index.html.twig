@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_reservation_list'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title_reservation_list'|trans }}</h1>
+    {% if pagination is defined and pagination.items|length %}
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'label_id'|trans, 'reservation.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_author'|trans, 'reservation.author.email') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_created_at'|trans, 'reservation.createdAt') }}</th>
+                <th>{{ 'label_actions'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for reservation in pagination.items %}
+                <tr>
+                    <td>{{ reservation.id }}</td>
+                    <td>{{ reservation.author.email }}</td>
+                    <td>{{ reservation.createdAt|format_date('long') }}</td>
+                    <td>
+                        <a href="{{ url('reservation_show', {id: reservation.id}) }}" title="{{ 'action_view'|trans }}">{{ 'action_view'|trans }}</a>
+                        <a href="{{ url('reservation_edit', {id: reservation.id}) }}" title="{{ 'action_edit'|trans }}">{{ 'action_edit'|trans }}</a>
+                        <a href="{{ url('reservation_delete', {id: reservation.id}) }}" title="{{ 'action_delete'|trans }}">{{ 'action_delete'|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <p>
+            <a href="{{ url('reservation_create') }}" title="{{ 'action_create'|trans }}">{{ 'action_create'|trans }}</a>
+        </p>
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+    {% else %}
+        <p>
+            {% include 'default/_single_flash_message.html.twig' with {
+                type: 'warning',
+                message: 'message_empty_list'|trans
+            } %}
+        </p>
+    {% endif %}
+{% endblock  %}

@@ -1,0 +1,9 @@
+{% include 'default/_form.html.twig' with {
+    page_title: 'title_tape_edit',
+    page_title_param: {'%id%': tape.id},
+    attr: {
+        method: 'PUT',
+        action: url('tape_edit', {'id': tape.id}),
+    },
+    back_to_list_path: 'tape_index',
+} %}

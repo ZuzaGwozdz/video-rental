@@ -1,0 +1,20 @@
+{% extends 'base_start.html.twig' %}
+
+{% block body %}
+    <div class="container p-2 m-2">
+        <div class="row">
+            <div class="col text-dark">
+                <h1>{{ 'message_start'|trans }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col offset-3">
+            <a href="{{ url('tape_index') }}" title="{{ 'title_tapes_list'|trans }}">
+                <img src="https://cdn0.iconfinder.com/data/icons/video-camera/64/videotape-tape-VHS-video-512.png" class="img-fluid" alt="Responsive image">
+            </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

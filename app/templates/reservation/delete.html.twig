@@ -1,0 +1,9 @@
+{% include 'default/_form.html.twig' with {
+    page_title: 'title_reservation_delete',
+    page_title_param: {'%id%': reservation.id},
+    attr: {
+        method: 'DELETE',
+        action: url('reservation_delete', {'id': reservation.id}),
+    },
+    back_to_list_path: 'reservation_index',
+} %}
