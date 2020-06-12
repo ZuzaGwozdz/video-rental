@@ -6,8 +6,10 @@
 namespace App\Controller;
 
 use App\Entity\Reservation;
+use App\Entity\Tape;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
+use App\Repository\TapeRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Knp\Component\Pager\PaginatorInterface;
@@ -87,19 +89,21 @@ class ReservationController extends AbstractController
      *
      * @param Request $request HTTP request
      * @param ReservationRepository $reservationRepository Reservation repository
+     * @param TapeRepository $tapeRepository Tape repository
+     * @param Tape $tape Tape entity
      *
      * @return Response HTTP response
      *
      * @throws ORMException
      * @throws OptimisticLockException
-     *
      * @Route(
-     *     "/create",
+     *     "/{id}/create",
      *     methods={"GET", "POST"},
      *     name="reservation_create",
+     *     requirements={"id": "[1-9]\d*"},
      *     )
      */
-    public function create(Request $request, ReservationRepository $reservationRepository): Response
+    public function create(Request $request, ReservationRepository $reservationRepository, TapeRepository $tapeRepository, Tape $tape): Response
     {
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
@@ -107,7 +111,10 @@ class ReservationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $reservation->setAuthor($this->getUser());
+            $tape->setAvailability(0);
+            $reservation->setTape($tape);
             $reservationRepository->save($reservation);
+            $tapeRepository->save($tape);
 
             $this->addFlash('sucess', 'message_created_successfully');
 
@@ -116,7 +123,10 @@ class ReservationController extends AbstractController
 
         return $this->render(
             'reservation/create.html.twig',
-            ['form' => $form->createView()]
+            [
+                'form' => $form->createView(),
+                'tape' => $tape,
+            ]
         );
     }
 

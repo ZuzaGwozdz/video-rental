@@ -61,9 +61,19 @@ class Reservation
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $author;
+
+    /**
+     * Tape.
+     *
+     * @var Tape
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tape")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $tape;
 
     /**
      * Getter for Id.
@@ -145,5 +155,15 @@ class Reservation
         $this->author = $author;
 
         return $this;
+    }
+
+    public function getTape(): ?Tape
+    {
+        return $this->tape;
+    }
+
+    public function setTape(?Tape $tape): void
+    {
+        $this->tape = $tape;
     }
 }

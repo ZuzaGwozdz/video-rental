@@ -9,20 +9,8 @@
     {% endblock %}
 </head>
 <body>
+{% include 'default/_navbar.html.twig' %}
 <div class="container">
-    <div class="row">
-        <div class="col offset-sm-11">
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        <div>
-            <a href="{{ url('app_logout') }}">{{ 'action_logout'|trans }}</a>
-        </div>
-    {% else %}
-        <div>
-            <a href="{{ url('app_login') }}">{{ 'action_login'|trans }}</a>
-        </div>
-    {% endif %}
-        </div>
-    </div>
     {% include 'default/_flash_messages.html.twig' %}
     {% block body %}{% endblock %}
 </div>

@@ -2,7 +2,7 @@
     page_title: 'title_reservation_create',
     attr: {
         method: 'POST',
-        action: url('reservation_create')
+        action: url('reservation_create', {'id': tape.id})
     },
     back_to_list_path: 'reservation_index',
 } %}

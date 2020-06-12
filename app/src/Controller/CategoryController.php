@@ -179,7 +179,7 @@ class CategoryController extends AbstractController
      */
     public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
-        if ($category->getTasks()->count()) {
+        if ($category->getTapes()->count()) {
             $this->addFlash('warning', 'message_category_contains_tasks');
 
             return $this->redirectToRoute('category_index');

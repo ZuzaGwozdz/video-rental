@@ -33,7 +33,7 @@
                         {% endif %}
                     </dd>
                         {% if tape.availability == 1 %}
-                            <dt><a href="{{ url('reservation_create') }}" title="{{ 'label_rent'|trans }}">{{ 'label_rent'|trans }}</a></dt>
+                            <dt><a href="{{ url('reservation_create', {id: tape.id}) }}" title="{{ 'label_rent'|trans }}">{{ 'label_rent'|trans }}</a></dt>
                         {% else %}
                             <dt>{{ 'label_not_available'|trans }}</dt>
                         {% endif %}
