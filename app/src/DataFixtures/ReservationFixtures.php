@@ -27,6 +27,7 @@ class ReservationFixtures extends AbstractBaseFixtures implements DependentFixtu
             $reservation->setCreatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             $reservation->setAuthor($this->getRandomReference('users'));
             $reservation->setTape($this->getRandomReference('tapes'));
+            $reservation->setStatus($this->faker->boolean);
 
             return $reservation;
         });

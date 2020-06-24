@@ -82,11 +82,7 @@ class Reservation
     private $tape;
 
     /**
-     * Status.
-     *
-     * @var boolean
-     *
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", options={"default" : 0})
      */
     private $status;
 
@@ -187,10 +183,8 @@ class Reservation
         return $this->status;
     }
 
-    public function setStatus(?bool $status): self
+    public function setStatus(bool $status): void
     {
         $this->status = $status;
-
-        return $this;
     }
 }

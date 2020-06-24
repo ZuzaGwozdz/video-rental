@@ -51,7 +51,7 @@ class ReservationRepository extends ServiceEntityRepository
     {
         return $this->getOrCreateQueryBuilder()
             ->select(
-                'partial reservation.{id, createdAt}',
+                'partial reservation.{id, createdAt, status}',
                 'partial user.{id, email}',
                 'partial tape.{id, title}'
             )

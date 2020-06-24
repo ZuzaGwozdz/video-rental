@@ -85,11 +85,6 @@ class ReservationController extends AbstractController
 
     public function show(Reservation $reservation): Response
     {
-        if ($reservation->getAuthor() !== $this->getUser()) {
-            $this->addFlash('warning', 'message.item_not_found');
-
-            return $this->redirectToRoute('reservation_index');
-        }
 
         return $this -> render(
             'reservation/show.html.twig',
@@ -165,11 +160,11 @@ class ReservationController extends AbstractController
 
     public function edit(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
     {
-        if ($reservation->getAuthor() !== $this->getUser()) {
-            $this->addFlash('warning', 'message.item_not_found');
+        #if ($reservation->getAuthor() !== $this->getUser()) {
+         #   $this->addFlash('warning', 'message.item_not_found');
 
-            return $this->redirectToRoute('reservation_index');
-        }
+          #  return $this->redirectToRoute('reservation_index');
+        #}
 
         $form = $this->createForm(ReservationType::class, $reservation, ['method' => 'PUT']);
         $form->handleRequest($request);
@@ -192,31 +187,32 @@ class ReservationController extends AbstractController
     }
 
     /**
- * Delete action.
- *
- * @param Request $request HTTP request
- * @param Reservation $reservation Reservation entity
- * @param ReservationRepository $reservationRepository Reservation repository
- *
- * @return Response HTTP response
- *
- * @throws ORMException
- * @throws OptimisticLockException
- *
- * @Route(
- *     "/{id}/delete",
- *     methods={"GET", "DELETE"},
- *     requirements={"id": "[1-9]\d*"},
- *     name="reservation_delete",
- *     )
- */
-    public function delete(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
+     * Delete action.
+     *
+     * @param Request $request HTTP request
+     * @param Reservation $reservation Reservation entity
+     * @param ReservationRepository $reservationRepository Reservation repository
+     * @param TapeRepository $tapeRepository Tape repository
+     *
+     * @return Response HTTP response
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
+     *
+     * @Route(
+     *     "/{id}/delete",
+     *     methods={"GET", "DELETE"},
+     *     requirements={"id": "[1-9]\d*"},
+     *     name="reservation_delete",
+     *     )
+     */
+    public function delete(Request $request, Reservation $reservation, ReservationRepository $reservationRepository, TapeRepository $tapeRepository): Response
     {
-        if ($reservation->getAuthor() !== $this->getUser()) {
-            $this->addFlash('warning', 'message.item_not_found');
+        #if ($reservation->getAuthor() !== $this->getUser()) {
+        #    $this->addFlash('warning', 'message.item_not_found');
 
-            return $this->redirectToRoute('reservation_index');
-        }
+        #    return $this->redirectToRoute('reservation_index');
+        #}
 
         $form = $this->createForm(FormType::class, $reservation, ['method' => 'DELETE']);
         $form->handleRequest($request);
@@ -226,6 +222,9 @@ class ReservationController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $tape = $reservation->getTape();
+            $tape->setAvailability(1);
+            $tapeRepository->save($tape);
             $reservationRepository->delete($reservation);
             $this->addFlash('success', 'message_deleted_successfully');
 
@@ -265,11 +264,6 @@ class ReservationController extends AbstractController
 
     public function confirm(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
     {
-        if ($reservation->getAuthor() !== $this->getUser()) {
-            $this->addFlash('warning', 'message.item_not_found');
-
-            return $this->redirectToRoute('reservation_index');
-        }
 
         $form = $this->createForm(FormType::class, $reservation, ['method' => 'PUT']);
         $form->handleRequest($request);
@@ -289,7 +283,7 @@ class ReservationController extends AbstractController
         }
 
         return $this->render(
-            'reservation/delete.html.twig',
+            'reservation/confirm.html.twig',
             [
                 'form' => $form->createView(),
                 'reservation' => $reservation,

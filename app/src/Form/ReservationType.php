@@ -43,6 +43,15 @@ class ReservationType extends AbstractType
                 'attr' => ['max_length' => 200],
             ]
         );
+
+        $builder->add(
+            'status',
+            CheckboxType::class,
+            [
+                'label' => 'label_status',
+                'required' => false,
+            ]
+        );
     }
 
     /**

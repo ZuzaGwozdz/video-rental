@@ -87,6 +87,7 @@ class TapeType extends AbstractType
         $builder->get('tags')->addModelTransformer(
             $this->tagsDataTransformer
         );
+
         $builder->add(
             'availability',
             CheckboxType::class,
