@@ -16,6 +16,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TagRepository extends ServiceEntityRepository
 {
+    const PAGINATOR_ITEMS_PER_PAGE = 3;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Tag::class);
@@ -75,4 +77,11 @@ class TagRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function queryAll()
+    {
+    }
+
+    public function findOneByTitle(string $title)
+    {
+    }
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="App\Entity\Tapes" table="tapes">
+    <indexes>
+      <index name="IDX_CC9DF64012469DE2" columns="category_id"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
+    <field name="updatedAt" type="datetime" column="updated_at" nullable="false"/>
+    <field name="title" type="string" column="title" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="availability" type="boolean" column="availability" nullable="false"/>
+    <many-to-one field="category" target-entity="Categories" fetch="LAZY">
+      <join-columns>
+        <join-column name="category_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="tag" target-entity="Tags" inversed-by="tape" fetch="LAZY">
+      <join-table name="tapes_tags">
+        <join-columns>
+          <join-column name="tape_id" referenced-column-name="id"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="tag_id" referenced-column-name="id"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+  </entity>
+</doctrine-mapping>

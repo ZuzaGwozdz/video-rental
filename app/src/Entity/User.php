@@ -90,6 +90,11 @@ class User implements UserInterface
     private $plainPassword;
 
     /**
+     * @ORM\Column(type="string", length=64, nullable=true)
+     */
+    private $nick;
+
+    /**
      * Getter for Id.
      *
      * @return int|null Result
@@ -204,5 +209,29 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getNick(): ?string
+    {
+        return $this->nick;
+    }
+
+    public function setNick(?string $nick): self
+    {
+        $this->nick = $nick;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
     }
 }

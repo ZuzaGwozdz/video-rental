@@ -5,6 +5,8 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
+use App\Entity\Tag;
 use App\Entity\Tape;
 use App\Entity\Task;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -76,14 +78,47 @@ class TapeRepository extends ServiceEntityRepository
     /**
      * Query all records.
      *
+     * @param array $filters
      * @return QueryBuilder Query builder
      */
-    public function queryAll(): QueryBuilder
+    public function queryAll(array $filters = []): QueryBuilder
     {
-        return $this->getOrCreateQueryBuilder()
-            ->select('tape', 'category')
+        $queryBuilder = $this->getOrCreateQueryBuilder()
+            ->select(
+                'partial tape.{id, createdAt, updatedAt, title, availability}',
+                'partial category.{id, title}',
+                'partial tags.{id, title}'
+            )
             ->join('tape.category', 'category')
+            ->leftJoin('tape.tags', 'tags')
             ->orderBy('tape.updatedAt', 'DESC');
+
+        $queryBuilder = $this->applyFiltersToList($queryBuilder, $filters);
+
+        return $queryBuilder;
+    }
+
+    /**
+     * Apply filters to paginated list.
+     *
+     * @param QueryBuilder $queryBuilder Query builder
+     * @param array                      $filters      Filters array
+     *
+     * @return QueryBuilder Query builder
+     */
+    private function applyFiltersToList(QueryBuilder $queryBuilder, array $filters = []): QueryBuilder
+    {
+        if (isset($filters['category']) && $filters['category'] instanceof Category) {
+            $queryBuilder->andWhere('category = :category')
+                ->setParameter('category', $filters['category']);
+        }
+
+        if (isset($filters['tag']) && $filters['tag'] instanceof Tag) {
+            $queryBuilder->andWhere('tags IN (:tag)')
+                ->setParameter('tag', $filters['tag']);
+        }
+
+        return $queryBuilder;
     }
 
     /**

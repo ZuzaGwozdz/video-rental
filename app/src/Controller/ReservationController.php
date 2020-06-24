@@ -13,6 +13,7 @@ use App\Repository\TapeRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,11 +44,23 @@ class ReservationController extends AbstractController
 
     public function index(Request $request, ReservationRepository $reservationRepository, PaginatorInterface $paginator): Response
     {
-        $pagination = $paginator->paginate(
-            $reservationRepository->queryByAuthor($this->getUser()),
-            $request->query->getInt('page', 1),
-            ReservationRepository::PAGINATOR_ITEMS_PER_PAGE
-        );
+        if ($this->isGranted('ROLE_ADMIN'))
+        {
+            $pagination = $paginator->paginate(
+                $reservationRepository->queryAll(),
+                $request->query->getInt('page', 1),
+                ReservationRepository::PAGINATOR_ITEMS_PER_PAGE
+            );
+        }
+        else
+        {
+            $pagination = $paginator->paginate(
+                $reservationRepository->queryByAuthor($this->getUser()),
+                $request->query->getInt('page', 1),
+                ReservationRepository::PAGINATOR_ITEMS_PER_PAGE
+            );
+        }
+
 
         return $this-> render(
             'reservation/index.html.twig',
@@ -179,7 +192,57 @@ class ReservationController extends AbstractController
     }
 
     /**
-     * Delete action.
+ * Delete action.
+ *
+ * @param Request $request HTTP request
+ * @param Reservation $reservation Reservation entity
+ * @param ReservationRepository $reservationRepository Reservation repository
+ *
+ * @return Response HTTP response
+ *
+ * @throws ORMException
+ * @throws OptimisticLockException
+ *
+ * @Route(
+ *     "/{id}/delete",
+ *     methods={"GET", "DELETE"},
+ *     requirements={"id": "[1-9]\d*"},
+ *     name="reservation_delete",
+ *     )
+ */
+    public function delete(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
+    {
+        if ($reservation->getAuthor() !== $this->getUser()) {
+            $this->addFlash('warning', 'message.item_not_found');
+
+            return $this->redirectToRoute('reservation_index');
+        }
+
+        $form = $this->createForm(FormType::class, $reservation, ['method' => 'DELETE']);
+        $form->handleRequest($request);
+
+        if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
+            $form->submit($request->request->get($form->getName()));
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reservationRepository->delete($reservation);
+            $this->addFlash('success', 'message_deleted_successfully');
+
+            return $this->redirectToRoute('reservation_index');
+        }
+
+        return $this->render(
+            'reservation/delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'reservation' => $reservation,
+            ]
+        );
+    }
+
+    /**
+     * Confirm action.
      *
      * @param Request $request HTTP request
      * @param Reservation $reservation Reservation entity
@@ -191,30 +254,36 @@ class ReservationController extends AbstractController
      * @throws OptimisticLockException
      *
      * @Route(
-     *     "/{id}/delete",
-     *     methods={"GET", "DELETE"},
+     *     "/{id}/confirm",
+     *     methods={"GET", "PUT"},
      *     requirements={"id": "[1-9]\d*"},
-     *     name="reservation_delete",
+     *     name="reservation_confirm",
      *     )
+     *
+     * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
+
+    public function confirm(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
     {
         if ($reservation->getAuthor() !== $this->getUser()) {
             $this->addFlash('warning', 'message.item_not_found');
 
             return $this->redirectToRoute('reservation_index');
         }
-        
-        $form = $this->createForm(FormType::class, $reservation, ['method' => 'DELETE']);
+
+        $form = $this->createForm(FormType::class, $reservation, ['method' => 'PUT']);
         $form->handleRequest($request);
 
-        if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
+        if ($request->isMethod('PUT') && !$form->isSubmitted()) {
             $form->submit($request->request->get($form->getName()));
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $reservationRepository->delete($reservation);
-            $this->addFlash('success', 'message_deleted_successfully');
+
+            $reservation->setStatus(1);
+            $reservationRepository->save($reservation);
+
+            $this->addFlash('sucess', 'message_confirmed');
 
             return $this->redirectToRoute('reservation_index');
         }

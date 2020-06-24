@@ -6,20 +6,33 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ url('tape_index') }}">Tapes</a>
             </li>
+            {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN') %}
             <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
+                <a class="nav-link" href="{{ url('reservation_index') }}">Reservations</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Administrator
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Users</a>
+                    <a class="dropdown-item" href="{{ url('category_index') }}">Category</a>
+                    <a class="dropdown-item" href="#">Tags</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Reservations</a>
+                </div>
             </li>
+            {% endif %}
         </ul>
         <ul class="navbar-nav">
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('app_logout') }}">{{ 'action_logout'|trans }}</a>
-                </li>>
+                </li>
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('app_login') }}">{{ 'action_login'|trans }}</a>

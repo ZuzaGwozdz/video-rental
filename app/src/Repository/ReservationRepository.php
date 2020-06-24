@@ -50,6 +50,13 @@ class ReservationRepository extends ServiceEntityRepository
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
+            ->select(
+                'partial reservation.{id, createdAt}',
+                'partial user.{id, email}',
+                'partial tape.{id, title}'
+            )
+            ->join('reservation.author', 'user')
+            ->leftJoin('reservation.tape', 'tape')
             ->orderBy('reservation.createdAt', 'DESC');
     }
 

@@ -29,16 +29,31 @@
                     <td>{{ tape.title }}</td>
                     <td>{{ tape.createdAt|format_date('long') }}</td>
                     <td>{{ tape.updatedAt|format_date('long') }}</td>
-                    <td><a href="{{ url('category_show', {id: tape.category.id}) }}" title="{{ tape.category.title }}">{{ tape.category.title }}</a></td>
+                    <td><a href="{{ url('tape_index', {'filters' : {'category' : tape.category.id}}) }}" title="{{ tape.category.title }}">
+                            {{ tape.category.title }}
+                        </a>
+                    </td>
                     {% if tape.availability == 0 %}
                         <td>{{ 'label_no'|trans }}</td>
                     {% else %}
                         <td>{{ 'label_yes'|trans }}</td>
                     {% endif %}
                     <td>
-                        <a href="{{ url('tape_show', {id: tape.id}) }}" title="{{ 'action_view'|trans }}">{{ 'action_view'|trans }}</a>
-                        <a href="{{ url('tape_edit', {id: tape.id}) }}" title="{{ 'action_edit'|trans }}">{{ 'action_edit'|trans }}</a>
-                        <a href="{{ url('tape_delete', {id: tape.id}) }}" title="{{ 'action_delete'|trans }}">{{ 'action_delete'|trans }}</a>
+                        {% if is_granted('VIEW', tape) %}
+                            <a href="{{ url('tape_show', {id: tape.id}) }}" title="{{ 'action_view'|trans }}">
+                                {{ 'action_view'|trans }}
+                            </a>
+                        {% endif %}
+                        {% if is_granted('EDIT', tape) %}
+                            <a href="{{ url('tape_edit', {id: tape.id}) }}" title="{{ 'action_edit'|trans }}">
+                                {{ 'action_edit'|trans }}
+                            </a>
+                        {% endif %}
+                        {% if is_granted('DELETE', tape) %}
+                            <a href="{{ url('tape_delete', {id: tape.id}) }}" title="{{ 'action_delete'|trans }}">
+                                {{ 'action_delete'|trans }}
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

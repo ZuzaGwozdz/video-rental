@@ -8,9 +8,11 @@ namespace App\Controller;
 use App\Entity\Tape;
 use App\Form\TapeType;
 use App\Repository\TapeRepository;
+use App\Service\TapeService;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,11 +28,26 @@ use Symfony\Component\Routing\Annotation\Route;
 class TapeController extends AbstractController
 {
     /**
+     * Tape service.
+     *
+     * @var TapeService
+     */
+    private $tapeService;
+
+    /**
+     * TapeController constructor.
+     *
+     * @param TapeService $tapeService Tape service
+     */
+    public function __construct(TapeService $tapeService)
+    {
+        $this->tapeService = $tapeService;
+    }
+    
+    /**
      * Index action.
      *
      * @param Request $request HTTP request
-     * @param TapeRepository $tapeRepository Tape repository
-     * @param PaginatorInterface $paginator Paginator
      *
      * @return Response HTTP response
      *
@@ -41,12 +58,11 @@ class TapeController extends AbstractController
      * )
      */
 
-    public function index(Request $request, TapeRepository $tapeRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
-        $pagination = $paginator->paginate(
-            $tapeRepository->queryAll(),
+        $pagination = $this->tapeService->createPaginatedList(
             $request->query->getInt('page', 1),
-            TapeRepository::PAGINATOR_ITEMS_PER_PAGE
+            $request->query->getAlnum('filters', [])
         );
 
         return $this-> render(
@@ -68,6 +84,11 @@ class TapeController extends AbstractController
      *     name="tape_show",
      *     requirements={"id": "[1-9]\d*"},
      *     )
+     *
+     * * @IsGranted(
+     *     "VIEW",
+     *     subject="tape",
+     * )
      */
 
     public function show(Tape $tape): Response
@@ -82,7 +103,6 @@ class TapeController extends AbstractController
      * Create action.
      *
      * @param Request $request        HTTP request
-     * @param TapeRepository $tapeRepository Tape repository
      *
      * @return Response HTTP response
      *
@@ -95,14 +115,14 @@ class TapeController extends AbstractController
      *     name="tape_create",
      * )
      */
-    public function create(Request $request, TapeRepository $tapeRepository): Response
+    public function create(Request $request): Response
     {
         $tape = new Tape();
         $form = $this->createForm(TapeType::class, $tape);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $tapeRepository->save($tape);
+            $this->tapeService->save($tape);
             $this->addFlash('success', 'message_created_successfully');
 
             return $this->redirectToRoute('tape_index');
@@ -119,7 +139,6 @@ class TapeController extends AbstractController
      *
      * @param Request $request        HTTP request
      * @param Tape                         $tape          Tape entity
-     * @param TapeRepository            $tapeRepository Tape repository
      *
      * @return Response HTTP response
      *
@@ -132,14 +151,19 @@ class TapeController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      *     name="tape_edit",
      * )
+     *
+     *  * @IsGranted(
+     *     "EDIT",
+     *     subject="tape",
+     * )
      */
-    public function edit(Request $request, Tape $tape, TapeRepository $tapeRepository): Response
+    public function edit(Request $request, Tape $tape): Response
     {
         $form = $this->createForm(TapeType::class, $tape, ['method' => 'PUT']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $tapeRepository->save($tape);
+            $this->tapeService->save($tape);
             $this->addFlash('success', 'message_updated_successfully');
 
             return $this->redirectToRoute('tape_index');
@@ -159,7 +183,6 @@ class TapeController extends AbstractController
      *
      * @param Request $request        HTTP request
      * @param Tape                          $tape           Tape entity
-     * @param TapeRepository            $tapeRepository Tape repository
      *
      * @return Response HTTP response
      *
@@ -172,8 +195,13 @@ class TapeController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      *     name="tape_delete",
      * )
+     *
+     *  * @IsGranted(
+     *     "DELETE",
+     *     subject="tape",
+     * )
      */
-    public function delete(Request $request, Tape $tape, TapeRepository $tapeRepository): Response
+    public function delete(Request $request, Tape $tape): Response
     {
         $form = $this->createForm(FormType::class, $tape, ['method' => 'DELETE']);
         $form->handleRequest($request);
@@ -183,7 +211,7 @@ class TapeController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $tapeRepository->delete($tape);
+            $this->tapeService->delete($tape);
             $this->addFlash('success', 'message_deleted_successfully');
 
             return $this->redirectToRoute('tape_index');

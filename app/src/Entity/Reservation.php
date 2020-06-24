@@ -60,7 +60,10 @@ class Reservation
      *
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(
+     *     targetEntity="App\Entity\User",
+     *     fetch="EXTRA_LAZY",
+     *     )
      * @ORM\JoinColumn(nullable=true)
      */
     private $author;
@@ -70,10 +73,22 @@ class Reservation
      *
      * @var Tape
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tape")
+     * @ORM\ManyToOne(
+     *     targetEntity="App\Entity\Tape",
+     *     fetch="EXTRA_LAZY",
+     *     )
      * @ORM\JoinColumn(nullable=true)
      */
     private $tape;
+
+    /**
+     * Status.
+     *
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $status;
 
     /**
      * Getter for Id.
@@ -165,5 +180,17 @@ class Reservation
     public function setTape(?Tape $tape): void
     {
         $this->tape = $tape;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?bool $status): self
+    {
+        $this->status = $status;
+
+        return $this;
     }
 }

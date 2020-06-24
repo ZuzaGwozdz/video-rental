@@ -102,7 +102,11 @@ class Tag
      * Tapes.
      * @var ArrayCollection|Tape[] Tapes
      *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Tape", mappedBy="tags")
+     * @ORM\ManyToMany(
+     *     targetEntity="App\Entity\Tape",
+     *      mappedBy="tags",
+     *     fetch="EXTRA_LAZY",
+     *     )
      *
      * @Assert\Type(type="Doctrine\Common\Collections\ArrayCollection")
      */
