@@ -1,13 +1,9 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Edit User{% endblock %}
-
-{% block body %}
-    <h1>Edit User</h1>
-
-    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('user_index') }}">back to list</a>
-
-    {{ include('user/_delete_form.html.twig') }}
-{% endblock %}
+{% include 'default/_form.html.twig' with {
+    page_title: 'title_user_edit',
+    page_title_param: {'%id%': user.id},
+    attr: {
+        method: 'PUT',
+        action: url('user_edit', {'id': user.id}),
+    },
+    back_to_list_path: 'user_index',
+} %}

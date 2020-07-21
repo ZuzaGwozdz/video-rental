@@ -5,9 +5,12 @@
 {% endblock %}
 
 {% block body %}
+
+    {% if is_granted('ROLE_ADMIN') %}
     <p>
-        <a href="{{ url('tape_create') }}" title="{{ 'action_create'|trans }}">{{ 'action_create'|trans }}</a>
+        <a href="{{ url('tape_create') }}" title="{{ 'action_add'|trans }}">{{ 'action_add'|trans }}</a>
     </p>
+    {% endif %}
 
     <h1>{{ 'title_tapes_list'|trans }}</h1>
     {% if pagination is defined and pagination.items|length %}
@@ -39,17 +42,13 @@
                         <td>{{ 'label_yes'|trans }}</td>
                     {% endif %}
                     <td>
-                        {% if is_granted('VIEW', tape) %}
-                            <a href="{{ url('tape_show', {id: tape.id}) }}" title="{{ 'action_view'|trans }}">
-                                {{ 'action_view'|trans }}
-                            </a>
-                        {% endif %}
-                        {% if is_granted('EDIT', tape) %}
+                        <a href="{{ url('tape_show', {id: tape.id}) }}" title="{{ 'action_view'|trans }}">
+                            {{ 'action_view'|trans }}
+                        </a>
+                        {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{ url('tape_edit', {id: tape.id}) }}" title="{{ 'action_edit'|trans }}">
                                 {{ 'action_edit'|trans }}
                             </a>
-                        {% endif %}
-                        {% if is_granted('DELETE', tape) %}
                             <a href="{{ url('tape_delete', {id: tape.id}) }}" title="{{ 'action_delete'|trans }}">
                                 {{ 'action_delete'|trans }}
                             </a>

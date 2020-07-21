@@ -5,6 +5,13 @@
 {% endblock %}
 
 {% block body %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <p>
+            <a href="{{ url('category_create') }}" title="{{ 'action_add'|trans }}">{{ 'action_add'|trans }}</a>
+        </p>
+    {% endif %}
+
     <h1>{{ 'title_category_list'|trans }}</h1>
     {% if pagination is defined and pagination.items|length %}
 
@@ -15,7 +22,9 @@
                 <th>{{ knp_pagination_sortable(pagination, 'label_title'|trans, 'category.title') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_created_at'|trans, 'category.createdAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_updated_at'|trans, 'category.updatedAt') }}</th>
+                {% if is_granted('ROLE_ADMIN') %}
                 <th>{{ 'label_actions'|trans }}</th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
@@ -25,6 +34,8 @@
                     <td>{{ category.title }}</td>
                     <td>{{ category.createdAt|format_date('long') }}</td>
                     <td>{{ category.updatedAt|format_date('long') }}</td>
+
+                    {% if is_granted('ROLE_ADMIN') %}
                     <td>
                         <a href="{{ url('category_show', {id: category.id}) }}" title="{{ 'action_view'|trans }}">{{ 'action_view'|trans }}</a>
                         <a href="{{ url('category_edit', {id: category.id}) }}" title="{{ 'action_edit'|trans }}">{{ 'action_edit'|trans }}</a>
@@ -34,14 +45,13 @@
                             </a>
                         {% endif %}
                     </td>
+                    {% endif %}
+
                 </tr>
             {% endfor %}
             </tbody>
         </table>
 
-        <p>
-            <a href="{{ url('category_create') }}" title="{{ 'action_create'|trans }}">{{ 'action_create'|trans }}</a>
-        </p>
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
         </div>

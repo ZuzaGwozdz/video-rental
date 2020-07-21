@@ -1,13 +1,9 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Edit Tag{% endblock %}
-
-{% block body %}
-    <h1>Edit Tag</h1>
-
-    {{ include('tag/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('tag_index') }}">back to list</a>
-
-    {{ include('tag/_delete_form.html.twig') }}
-{% endblock %}
+{% include 'default/_form.html.twig' with {
+    page_title: 'title_tag_edit',
+    page_title_param: {'%id%': tag.id},
+    attr: {
+        method: 'PUT',
+        action: url('tag_edit', {'id': tag.id}),
+    },
+    back_to_list_path: 'tag_index',
+} %}

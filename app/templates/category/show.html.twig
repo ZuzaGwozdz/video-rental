@@ -21,7 +21,7 @@
             <dd>{{ category.updatedAt|format_date('long') }}</dd>
             <dt>{{ 'label_title'|trans }}</dt>
             <dd>{{ category.title }}</dd>
-            <dt>{{ 'label_tapes'|trans }}</dt>
+            <dt>{{ 'label_tapes_in_category'|trans }}</dt>
             <dd>
                 {% if category.tapes is defined and category.tapes|length %}
                     {% for tape in category.tapes %}

@@ -1,35 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}
+    {{ 'title_user_list'|trans }}
+{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
+    <p>
+        <a href="{{ url('user_create') }}" title="{{ 'action_add_m'|trans }}">{{ 'action_add_m'|trans }}</a>
+    </p>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <h1>{{ 'title_user_list'|trans }}</h1>
+    {% if pagination is defined and pagination.items|length %}
 
-    <a href="{{ path('user_new') }}">Create new</a>
-{% endblock %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'label_id'|trans, 'user.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_email'|trans, 'user.email') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_nick'|trans, 'user.nick') }}</th>
+                <th>{{ 'label_actions'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in pagination.items %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.nick }}</td>
+                    <td>
+                        <a href="{{ url('user_show', {id: user.id}) }}" title="{{ 'action_view'|trans }}">{{ 'action_view'|trans }}</a>
+                        <a href="{{ url('user_edit', {id: user.id}) }}" title="{{ 'action_edit'|trans }}">{{ 'action_edit'|trans }}</a>
+                        <a href="{{ url('user_delete', {id: user.id}) }}" title="{{ 'action_delete'|trans }}">{{ 'action_delete'|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+    {% else %}
+        <p>
+            {% include 'default/_single_flash_message.html.twig' with {
+                type: 'warning',
+                message: 'message_empty_list'|trans
+            } %}
+        </p>
+    {% endif %}
+{% endblock  %}

@@ -102,7 +102,7 @@ class TagService
      *
      * @param int $id Tag Id
      *
-     * @return \App\Entity\Tag|null Tag entity
+     * @return Tag|null Tag entity
      */
     public function findOneById(int $id): ?Tag
     {

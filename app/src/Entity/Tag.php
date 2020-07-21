@@ -108,7 +108,7 @@ class Tag
      *     fetch="EXTRA_LAZY",
      *     )
      *
-     * @Assert\Type(type="Doctrine\Common\Collections\ArrayCollection")
+     *
      */
     private $tapes;
 

@@ -85,10 +85,6 @@ class TapeController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      *     )
      *
-     * * @IsGranted(
-     *     "VIEW",
-     *     subject="tape",
-     * )
      */
 
     public function show(Tape $tape): Response
@@ -114,6 +110,8 @@ class TapeController extends AbstractController
      *     methods={"GET", "POST"},
      *     name="tape_create",
      * )
+     *
+     * @IsGranted("ROLE_ADMIN")
      */
     public function create(Request $request): Response
     {
@@ -152,10 +150,7 @@ class TapeController extends AbstractController
      *     name="tape_edit",
      * )
      *
-     *  * @IsGranted(
-     *     "EDIT",
-     *     subject="tape",
-     * )
+     * @IsGranted("ROLE_ADMIN")
      */
     public function edit(Request $request, Tape $tape): Response
     {
@@ -196,10 +191,7 @@ class TapeController extends AbstractController
      *     name="tape_delete",
      * )
      *
-     *  * @IsGranted(
-     *     "DELETE",
-     *     subject="tape",
-     * )
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Tape $tape): Response
     {

@@ -1,28 +1,28 @@
 <?php
 /**
- * Tag service.
+ * User service.
  */
 
 namespace App\Service;
 
-use App\Entity\Tag;
-use App\Repository\TagRepository;
+use App\Entity\User;
+use App\Repository\UserRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
 /**
- * Class TagService.
+ * Class UserService.
  */
-class LoginService
+class UserService
 {
     /**
-     * Tag repository.
+     * User repository.
      *
-     * @var TagRepository
+     * @var UserRepository
      */
-    private $tagRepository;
+    private $userRepository;
 
     /**
      * Paginator.
@@ -32,14 +32,14 @@ class LoginService
     private $paginator;
 
     /**
-     * TagService constructor.
+     * UserService constructor.
      *
-     * @param TagRepository $tagRepository Tag repository
+     * @param UserRepository $userRepository User repository
      * @param PaginatorInterface $paginator          Paginator
      */
-    public function __construct(TagRepository $tagRepository, PaginatorInterface $paginator)
+    public function __construct(UserRepository $userRepository, PaginatorInterface $paginator)
     {
-        $this->tagRepository = $tagRepository;
+        $this->userRepository = $userRepository;
         $this->paginator = $paginator;
     }
 
@@ -53,47 +53,47 @@ class LoginService
     public function createPaginatedList(int $page): PaginationInterface
     {
         return $this->paginator->paginate(
-            $this->tagRepository->queryAll(),
+            $this->userRepository->queryAll(),
             $page,
-            TagRepository::PAGINATOR_ITEMS_PER_PAGE
+            UserRepository::PAGINATOR_ITEMS_PER_PAGE
         );
     }
 
     /**
-     * Save tag.
+     * Save user.
      *
-     * @param Tag $tag Tag entity
-     *
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function save(Tag $tag): void
-    {
-        $this->tagRepository->save($tag);
-    }
-
-    /**
-     * Delete tag.
-     *
-     * @param Tag $tag Tag entity
+     * @param User $user User entity
      *
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function delete(Tag $tag): void
+    public function save(User $user): void
     {
-        $this->tagRepository->delete($tag);
+        $this->userRepository->save($user);
     }
 
     /**
-     * Find by title.
+     * Delete user.
      *
-     * @param string $title tag title
+     * @param User $user User entity
      *
-     * @return Tag|null Tag entity
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
-    public function findOneByTitle(string $title): ?Tag
+    public function delete(User $user): void
     {
-        return $this->tagRepository->findOneByTitle($title);
+        $this->userRepository->delete($user);
+    }
+
+    /**
+     * Find user by Id.
+     *
+     * @param int $id User Id
+     *
+     * @return User|null User entity
+     */
+    public function findOneById(int $id): ?User
+    {
+        return $this->userRepository->findOneById($id);
     }
 }
