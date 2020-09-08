@@ -1,34 +1,23 @@
 <?php
 /**
- * Reservation type.
+ * User type.
  */
 
 namespace App\Form;
 
-use App\Entity\Category;
-use App\Entity\Reservation;
-use App\Entity\Tape;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\UserData;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 
 /**
- * Class ReservationType.
+ * Class UserType.
  */
-class ReservationType extends AbstractType
+class UserDataType extends AbstractType
 {
-    private $authorization;
-
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
-    {
-        $this->authorization = $authorizationChecker;
-    }
-
     /**
      * Builds the form.
      *
@@ -43,26 +32,34 @@ class ReservationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
-            'comment',
-            TextareaType::class,
+            'name',
+            TextType::class,
             [
-                'label' => 'label_comment',
-                'required' => false,
-                'attr' => ['max_length' => 200],
+                'label' => 'label_name',
+                'required' => true,
+                'attr' => ['max_length' => 255],
             ]
         );
 
-        if($this->authorization->isGranted('ROLE_ADMIN'))
-        {
-            $builder->add(
-                'status',
-                CheckboxType::class,
-                [
-                    'label' => 'label_status',
-                    'required' => false,
-                ]
-            );        
-        }
+        $builder->add(
+            'surname',
+            TextType::class,
+            [
+                'label' => 'label_surname',
+                'required' => true,
+                'attr' => ['max_length' => 255],
+            ]
+        );
+
+        $builder->add(
+            'birthday',
+            BirthdayType::class,
+            [
+                'label' => 'label_birthday',
+                'required' => false,
+            ]
+        );
+
     }
 
     /**
@@ -72,7 +69,7 @@ class ReservationType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => Reservation::class]);
+        $resolver->setDefaults(['data_class' => UserData::class]);
     }
 
     /**
@@ -85,6 +82,6 @@ class ReservationType extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'reservation';
+        return 'userData';
     }
 }

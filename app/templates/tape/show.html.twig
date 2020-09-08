@@ -37,15 +37,16 @@
             </dl>
         </div>
     </div>
-                <div class="row">
-                    <div class="col">
-                        {% if tape.availability == 1 %}
-                            <a href="{{ url('reservation_create', {id: tape.id}) }}" title="{{ 'label_rent'|trans }}">{{ 'label_rent'|trans }}</a>
-                        {% else %}
-                            {{ 'label_not_available'|trans }}
-                        {% endif %}
-                    </div>
-                </div>
+    <div class="row">
+        <div class="col">
+            {% if tape.availability == 1 %}
+                <a href="{{ url('reservation_create', {id: tape.id}) }}" title="{{ 'label_rent'|trans }}">{{ 'label_rent'|trans }}</a>
+            {% else %}
+                {{ 'label_not_available'|trans }}
+            {% endif %}
+        </div>
+    </div>
+    {{ render( controller( 'RatingBundle:Rating:result', {'contentId': tape.id} ) ) }}
     {% else %}
         <p>
             {{ 'message_item_not_found'|trans }}

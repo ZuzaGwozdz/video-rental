@@ -5,10 +5,10 @@ services:
         build: .docker/apache
         container_name: sf_apache
         ports:
-          - 8000:80
+          - 80:80
         volumes:
-          - /c/Users/Zuza/chojna/test/.docker/config/vhosts:/etc/apache2/sites-enabled
-          - /c/Users/Zuza/chojna/test/app:/home/wwwroot/sf
+          - /home/virtua/sites/studia/video-rental/.docker/config/vhosts:/etc/apache2/sites-enabled
+          - /home/virtua/sites/studia/video-rental/app:/home/wwwroot/sf
         depends_on:
           - php
 
@@ -19,7 +19,7 @@ services:
         command: " --default-authentication-plugin=mysql_native_password --innodb_use_native_aio=0"
         container_name: sf_mysql
         volumes:
-            - /c/Users/Zuza/chojna/test/data/db:/var/lib/mysql
+            - /home/virtua/sites/studia/video-rental/data/db:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: sf
@@ -30,7 +30,7 @@ services:
         build: .docker/php
         container_name: sf_php
         volumes:
-          - /c/Users/Zuza/chojna/test/app:/home/wwwroot/sf
+          - /home/virtua/sites/studia/video-rental/app:/home/wwwroot/sf
         environment:
           - maildev_host=sf_maildev
         depends_on:
@@ -41,4 +41,4 @@ services:
         image: djfarrelly/maildev
         container_name: sf_maildev
         ports:
-          - 8001:80
+          - 8001:8000

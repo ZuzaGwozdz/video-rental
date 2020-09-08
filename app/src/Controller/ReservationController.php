@@ -26,21 +26,22 @@ use Symfony\Component\Routing\Annotation\Route;
  * @Route("/reservation")
  */
 class ReservationController extends AbstractController
-{/**
- * Index action.
- *
- * @param Request $request HTTP request
- * @param ReservationRepository $reservationRepository Reservation repository
- * @param PaginatorInterface $paginator Paginator
- *
- * @return Response HTTP response
- *
- * @Route(
- *     "/",
- *     methods={"GET"},
- *     name="reservation_index",
- * )
- */
+{
+    /**
+     * Index action.
+     *
+     * @param Request $request HTTP request
+     * @param ReservationRepository $reservationRepository Reservation repository
+     * @param PaginatorInterface $paginator Paginator
+     *
+     * @return Response HTTP response
+     *
+     * @Route(
+     *     "/",
+     *     methods={"GET"},
+     *     name="reservation_index",
+     * )
+     */
 
     public function index(Request $request, ReservationRepository $reservationRepository, PaginatorInterface $paginator): Response
     {
@@ -119,8 +120,8 @@ class ReservationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $reservation->setAuthor($this->getUser());
-            $tape->setAvailability(0);
             $reservation->setTape($tape);
+            $reservation->setStatus(0);
             $reservationRepository->save($reservation);
             $tapeRepository->save($tape);
 
@@ -160,11 +161,11 @@ class ReservationController extends AbstractController
 
     public function edit(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
     {
-        #if ($reservation->getAuthor() !== $this->getUser()) {
-         #   $this->addFlash('warning', 'message.item_not_found');
+        if ($reservation->getAuthor() !== $this->getUser()) {
+           $this->addFlash('warning', 'message.item_not_found');
 
-          #  return $this->redirectToRoute('reservation_index');
-        #}
+           return $this->redirectToRoute('reservation_index');
+        }
 
         $form = $this->createForm(ReservationType::class, $reservation, ['method' => 'PUT']);
         $form->handleRequest($request);
@@ -262,7 +263,7 @@ class ReservationController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      */
 
-    public function confirm(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
+    public function confirm(Request $request, Reservation $reservation, ReservationRepository $reservationRepository, TapeRepository $tapeRepository): Response
     {
 
         $form = $this->createForm(FormType::class, $reservation, ['method' => 'PUT']);
@@ -273,8 +274,10 @@ class ReservationController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $reservation->setStatus(1);
+            $tape = $reservation->getTape();
+            $tape->setAvailability(0);
+            $tapeRepository->save($tape);
             $reservationRepository->save($reservation);
 
             $this->addFlash('sucess', 'message_confirmed');

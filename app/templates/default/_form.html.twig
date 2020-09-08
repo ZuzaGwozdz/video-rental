@@ -32,6 +32,13 @@
                 </a>
             </div>
         {% endif %}
+        {% if back_path|default(false) %}
+            <div class="form-group row float-sm-left">
+                <a href="{{ url(back_path) }}" class="btn btn-link">
+                    {{ 'action_back'|trans }}
+                </a>
+            </div>
+        {% endif %}
         {{ form_end(form) }}
     </div>
 </div>

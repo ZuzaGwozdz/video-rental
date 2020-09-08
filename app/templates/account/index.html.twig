@@ -1,20 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'title_user_view'|trans({'%id%': user.id|default('')}) }}
+    {{ 'title_account_index'|trans }}
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'title_user_view'|trans({'%id%': user.id|default('')}) }}</h1>
-
-    <p>
-        <a href="{{ url('user_index') }}" title="{{ 'action_back_to_list'|trans }}">{{ 'action_back_to_list'|trans }}</a>
-    </p>
+    <h1>{{ 'title_account_index'|trans }}</h1>
 
     {% if user is defined and user|length %}
         <dl class="dl-horizontal">
-            <dt>{{ 'label_id'|trans }}</dt>
-            <dd>{{ user.id }}</dd>
             <dt>{{ 'label_email'|trans }}</dt>
             <dd>{{ user.email }}</dd>
             <dt>{{ 'label_nick'|trans }}</dt>
@@ -28,6 +22,13 @@
                 <dd>{{ user.userData.birthday|format_date('long') }}</dd>
             {% endif %}
         </dl>
+        
+        <p>
+            <a href="{{ url('account_edit')}}" class="btn btn-primary" title="{{ 'action_edit_data'|trans }}">{{ 'action_edit_data'|trans }}</a>
+        </p>
+        <p>
+            <a href="{{ url('account_reset')}}" class="btn btn-primary" title="{{ 'action_reset_password'|trans }}">{{ 'action_reset_password'|trans }}</a>
+        </p>
     {% else %}
         <p>
             {{ 'message_item_not_found'|trans }}

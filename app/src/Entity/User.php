@@ -95,6 +95,11 @@ class User implements UserInterface
     private $nick;
 
     /**
+     * @ORM\OneToOne(targetEntity=UserData::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $userData;
+
+    /**
      * Getter for Id.
      *
      * @return int|null Result
@@ -233,5 +238,20 @@ class User implements UserInterface
         $this->name = $name;
 
         return $this;
+    }
+
+    public function getUserData(): ?UserData
+    {
+        return $this->userData;
+    }
+
+    public function setUserData(UserData $userData): void
+    {
+        $this->userData = $userData;
+
+        // set the owning side of the relation if necessary
+        if ($userData->getUser() !== $this) {
+            $userData->setUser($this);
+        }
     }
 }

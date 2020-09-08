@@ -11,8 +11,10 @@
         <table class="table table-striped">
             <thead>
             <tr>
+            {% if is_granted('ROLE_ADMIN') %}
                 <th>{{ knp_pagination_sortable(pagination, 'label_id'|trans, 'reservation.id') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_author'|trans, 'reservation.author.email') }}</th>
+            {% endif %}
                 <th>{{ knp_pagination_sortable(pagination, 'label_tape'|trans, 'reservation.tape') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_created_at'|trans, 'reservation.createdAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_status'|trans, 'reservation.status') }}</th>
@@ -22,20 +24,28 @@
             <tbody>
             {% for reservation in pagination.items %}
                 <tr>
+                {% if is_granted('ROLE_ADMIN') %}
                     <td>{{ reservation.id }}</td>
                     <td>{{ reservation.author.email }}</td>
+                {% endif %}
                     <td>{{ reservation.tape.title }}</td>
                     <td>{{ reservation.createdAt|format_date('long') }}</td>
-                    {% if reservation.status == 0 %}
-                        <td>{{ 'label_no'|trans }}</td>
-                    {% else %}
-                        <td>{{ 'label_yes'|trans }}</td>
-                    {% endif %}
+                {% if reservation.status == 0 %}
+                    <td>{{ 'label_no'|trans }}</td>
+                {% else %}
+                    <td>{{ 'label_yes'|trans }}</td>
+                {% endif %}
                     <td>
                         <a href="{{ url('reservation_show', {id: reservation.id}) }}" title="{{ 'action_view'|trans }}">{{ 'action_view'|trans }}</a>
+                    {% if is_granted('ROLE_ADMIN') and reservation.status == 0 %}
+                        <a href="{{ url('reservation_delete', {id: reservation.id}) }}" title="{{ 'action_decline'|trans }}">{{ 'action_decline'|trans }}</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN') %}
                         <a href="{{ url('reservation_edit', {id: reservation.id}) }}" title="{{ 'action_edit'|trans }}">{{ 'action_edit'|trans }}</a>
-                        <a href="{{ url('reservation_delete', {id: reservation.id}) }}" title="{{ 'action_delete'|trans }}">{{ 'action_delete'|trans }}</a>
-                        <a href="{{ url('reservation_confirm', {id: reservation.id}) }}" title="{{ 'action_confirm'|trans }}">{{ 'action_confirm'|trans }}</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN') and reservation.status == 1 %}
+                        <a href="{{ url('reservation_delete', {id: reservation.id}) }}" title="{{ 'action_return'|trans }}">{{ 'action_return'|trans }}</a>
+                    {% endif %}
                     </td>
                 </tr>
             {% endfor %}

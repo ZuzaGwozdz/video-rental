@@ -49,6 +49,7 @@ class UserType extends AbstractType
             ]
         );
 
+        $builder->add('userData', UserDataType::class);
     }
 
     /**

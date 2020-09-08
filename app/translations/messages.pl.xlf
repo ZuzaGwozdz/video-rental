@@ -194,6 +194,18 @@
                 <source>label_tapes_in_tag</source>
                 <target>Kasety z tym tagiem:</target>
             </trans-unit>
+            <trans-unit id="app_forgot_password_request">
+                <source>app_forgot_password_request</source>
+                <target>Zapomniałem hasła</target>
+            </trans-unit>
+            <trans-unit id="label_user">
+                <source>label_user</source>
+                <target>Użytkownik</target>
+            </trans-unit>
+            <trans-unit id="label_status">
+                <source>label_status</source>
+                <target>Potwierdzona</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

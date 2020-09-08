@@ -6,7 +6,9 @@
 namespace App\Service;
 
 use App\Entity\User;
+use App\Entity\UserData;
 use App\Repository\UserRepository;
+use App\Repository\UserDataRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -25,6 +27,13 @@ class UserService
     private $userRepository;
 
     /**
+     * UserData repository.
+     *
+     * @var UserDataRepository
+     */
+    private $userDataRepository;
+
+    /**
      * Paginator.
      *
      * @var PaginatorInterface
@@ -35,10 +44,12 @@ class UserService
      * UserService constructor.
      *
      * @param UserRepository $userRepository User repository
+     * @param UserDataRepository $userDataRepository UserData repository
      * @param PaginatorInterface $paginator          Paginator
      */
-    public function __construct(UserRepository $userRepository, PaginatorInterface $paginator)
+    public function __construct(UserRepository $userRepository, UserDataRepository $userDataRepository, PaginatorInterface $paginator)
     {
+        $this->userDataRepository = $userDataRepository;
         $this->userRepository = $userRepository;
         $this->paginator = $paginator;
     }
@@ -70,6 +81,7 @@ class UserService
     public function save(User $user): void
     {
         $this->userRepository->save($user);
+        $this->userDataRepository->save($user->getUserData());
     }
 
     /**
@@ -83,6 +95,7 @@ class UserService
     public function delete(User $user): void
     {
         $this->userRepository->delete($user);
+        $this->userDataRepository->delete($user->getUserData());
     }
 
     /**

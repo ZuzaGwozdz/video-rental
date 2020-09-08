@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class TapeController.
  *
- * @Route("/tape")
+ * @Route("/")
  *
  */
 class TapeController extends AbstractController
