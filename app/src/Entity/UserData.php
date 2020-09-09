@@ -28,7 +28,7 @@ class UserData
     private $surname;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="date")
      */
     private $birthday;
 
@@ -37,6 +37,11 @@ class UserData
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $blocked;
 
     public function getId(): ?int
     {
@@ -83,5 +88,15 @@ class UserData
         $this->user = $user;
 
         return $this;
+    }
+
+    public function getBlocked(): ?bool
+    {
+        return $this->blocked;
+    }
+
+    public function setBlocked(bool $blocked): void
+    {
+        $this->blocked = $blocked;
     }
 }

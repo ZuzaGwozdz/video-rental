@@ -94,8 +94,8 @@ class UserService
      */
     public function delete(User $user): void
     {
-        $this->userRepository->delete($user);
         $this->userDataRepository->delete($user->getUserData());
+        $this->userRepository->delete($user);
     }
 
     /**

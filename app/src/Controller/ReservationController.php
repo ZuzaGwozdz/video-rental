@@ -209,11 +209,11 @@ class ReservationController extends AbstractController
      */
     public function delete(Request $request, Reservation $reservation, ReservationRepository $reservationRepository, TapeRepository $tapeRepository): Response
     {
-        #if ($reservation->getAuthor() !== $this->getUser()) {
-        #    $this->addFlash('warning', 'message.item_not_found');
+        if ($reservation->getAuthor() !== $this->getUser()) {
+            $this->addFlash('warning', 'message.item_not_found');
 
-        #    return $this->redirectToRoute('reservation_index');
-        #}
+            return $this->redirectToRoute('reservation_index');
+        }
 
         $form = $this->createForm(FormType::class, $reservation, ['method' => 'DELETE']);
         $form->handleRequest($request);

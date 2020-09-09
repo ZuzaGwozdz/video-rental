@@ -120,6 +120,7 @@ class TapeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $tape->setAvailability(1);
             $this->tapeService->save($tape);
             $this->addFlash('success', 'message_created_successfully');
 

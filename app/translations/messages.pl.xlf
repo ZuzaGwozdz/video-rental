@@ -6,25 +6,13 @@
                 <source>label_actions</source>
                 <target>Akcje</target>
             </trans-unit>
-            <trans-unit id="label_id">
-                <source>label_id</source>
-                <target>Id</target>
-            </trans-unit>
             <trans-unit id="label_title">
                 <source>label_title</source>
                 <target>Tytuł</target>
             </trans-unit>
-            <trans-unit id="label_content">
-                <source>label_content</source>
-                <target>Zawartość</target>
-            </trans-unit>
             <trans-unit id="message_empty_list">
                 <source>message_empty_list</source>
                 <target>Lista jest pusta.</target>
-            </trans-unit>
-            <trans-unit id="title_record_list">
-                <source>title_record_list</source>
-                <target>Lista rekordów</target>
             </trans-unit>
             <trans-unit id="label_created_at">
                 <source>label_created_at</source>
@@ -42,10 +30,6 @@
                 <source>action_view</source>
                 <target>podgląd</target>
             </trans-unit>
-            <trans-unit id="title_record_view">
-                <source>title_record_view</source>
-                <target>Podgląd rekordu #%id%</target>
-            </trans-unit>
             <trans-unit id="label_category">
                 <source>label_category</source>
                 <target>Kategoria</target>
@@ -56,7 +40,7 @@
             </trans-unit>
             <trans-unit id="action_add">
                 <source>action_add</source>
-                <target>Dodaj nową</target>
+                <target>Dodaj</target>
             </trans-unit>
             <trans-unit id="label_availability">
                 <source>label_availability</source>
@@ -150,10 +134,6 @@
                 <source>label_tapes_in_category</source>
                 <target>Kasety w tej kategorii:</target>
             </trans-unit>
-            <trans-unit id="title_tape_create">
-                <source>title_tape_create</source>
-                <target>Stwórz nową kasetę</target>
-            </trans-unit>
             <trans-unit id="title_category_create">
                 <source>title_category_create</source>
                 <target>Stwórz nową kategorię</target>
@@ -186,10 +166,6 @@
                 <source>title_tag_delete</source>
                 <target>Usuń tag #%id%</target>
             </trans-unit>
-            <trans-unit id="action_add_m">
-                <source>action_add_m</source>
-                <target>Dodaj nowy</target>
-            </trans-unit>
             <trans-unit id="label_tapes_in_tag">
                 <source>label_tapes_in_tag</source>
                 <target>Kasety z tym tagiem:</target>
@@ -205,6 +181,118 @@
             <trans-unit id="label_status">
                 <source>label_status</source>
                 <target>Potwierdzona</target>
+            </trans-unit>
+            <trans-unit id="title_user_view">
+                <source>title_user_view</source>
+                <target>Podgląd uzytkownika #%id%</target>
+            </trans-unit>
+            <trans-unit id="title_user_list">
+                <source>title_user_list</source>
+                <target>Lista użytkowników</target>
+            </trans-unit>
+            <trans-unit id="action_back">
+                <source>action_back</source>
+                <target>Powrót</target>
+            </trans-unit>
+            <trans-unit id="message_item_not_found">
+                <source>message_item_not_found</source>
+                <target>Szukany obiekt nie istnieje</target>
+            </trans-unit>
+            <trans-unit id="label_author">
+                <source>label_author</source>
+                <target>Autor</target>
+            </trans-unit>
+            <trans-unit id="label_tape">
+                <source>label_tape</source>
+                <target>Kaseta</target>
+            </trans-unit>
+            <trans-unit id="action_decline">
+                <source>action_decline</source>
+                <target>odrzuć</target>
+            </trans-unit>
+            <trans-unit id="action_return">
+                <source>action_return</source>
+                <target>Zwróć</target>
+            </trans-unit>
+            <trans-unit id="title_account_index">
+                <source>title_account_index</source>
+                <target>Moje konto</target>
+            </trans-unit>
+            <trans-unit id="label_name">
+                <source>label_name</source>
+                <target>Imie</target>
+            </trans-unit>
+            <trans-unit id="label_surname">
+                <source>label_surname</source>
+                <target>Nazwisko</target>
+            </trans-unit>
+            <trans-unit id="label_birthday">
+                <source>label_birthday</source>
+                <target>Urodziny</target>
+            </trans-unit>
+            <trans-unit id="action_reset_password">
+                <source>action_reset_password</source>
+                <target>Zmień hasło</target>
+            </trans-unit>
+            <trans-unit id="title_user_edit">
+                <source>title_user_edit</source>
+                <target>Edycja użytkownika #%id%</target>
+            </trans-unit>
+            <trans-unit id="title_user_delete">
+                <source>title_user_delete</source>
+                <target>Usuń użytkownika #%id%</target>
+            </trans-unit>
+            <trans-unit id="label_not_available">
+                <source>label_not_available</source>
+                <target>Kaseta jest aktualnie niedostepna.</target>
+            </trans-unit>
+            <trans-unit id="title_reservation_list">
+                <source>title_reservation_list</source>
+                <target>Lista rezerwacji</target>
+            </trans-unit>
+            <trans-unit id="title_reservation_view">
+                <source>title_reservation_view</source>
+                <target>Podglad rezerwacji #%id%</target>
+            </trans-unit>
+            <trans-unit id="label_comment">
+                <source>label_comment</source>
+                <target>Komentarz</target>
+            </trans-unit>
+            <trans-unit id="action_confirm">
+                <source>action_confirm</source>
+                <target>Potwierdź</target>
+            </trans-unit>
+            <trans-unit id="title_tape_create">
+                <source>title_tape_create</source>
+                <target>Dodaj nową kasetę</target>
+            </trans-unit>
+            <trans-unit id="title_tag_create">
+                <source>title_tag_create</source>
+                <target>Dodaj nowy tag</target>
+            </trans-unit>
+            <trans-unit id="title_user_create">
+                <source>title_user_create</source>
+                <target>Dodaj nowego użytkownika</target>
+            </trans-unit>
+            <trans-unit id="label_user_data">
+                <source>label_user_data</source>
+                <target>Dane użytkownika</target>
+            </trans-unit>
+            <trans-unit id="title_reservation_create">
+                <source>title_reservation_create</source>
+                <target>Stwórz nowa rezerwację</target>
+            </trans-unit>
+            <trans-unit id="title_user_block">
+                <source>title_user_block</source>
+                <target>Zablokuj/Odblokuj użytkownika #%id%</target>
+            </trans-unit>
+            <trans-unit id="action_block">
+                <source>action_block</source>
+                <target>zablokuj</target>
+            </trans-unit>
+            <trans-unit id="action_unblock">
+                <source>action_unblock</source>
+                <target>odblokuj</target>
             </trans-unit>
         </body>
     </file>

@@ -166,7 +166,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * Delete action.
+     * Block action.
      *
      * @param Request $request  HTTP request
      * @param User $user User entity
@@ -177,34 +177,37 @@ class UserController extends AbstractController
      * @throws OptimisticLockException
      *
      * @Route(
-     *     "/{id}/delete",
-     *     methods={"GET", "DELETE"},
+     *     "/{id}/block",
+     *     methods={"GET", "POST"},
      *     requirements={"id": "[1-9]\d*"},
-     *     name="user_delete",
+     *     name="user_block",
      * )
      *
      */
-    public function delete(Request $request, User $user): Response
+    public function block(Request $request, User $user): Response
     {
-        $form = $this->createForm(FormType::class, $user, ['method' => 'DELETE']);
+        $form = $this->createForm(FormType::class, $user);
         $form->handleRequest($request);
 
-        if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
-            $form->submit($request->request->get($form->getName()));
-        }
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->userService->delete($user);
-            $this->addFlash('success', 'message_deleted_successfully');
+            if ($user->getUserData()->getBlocked() == 0)
+            {
+                $user->getUserData()->setBlocked(1);
+                $this->addFlash('success', 'message_blocked_successfully');
+            }else{
+                $user->getUserData()->setBlocked(0);
+                $this->addFlash('success', 'message_unblocked_successfully');
+            }
+            $this->userService->save($user);
 
             return $this->redirectToRoute('user_index');
         }
 
         return $this->render(
-            'user/delete.html.twig',
+            'user/block.html.twig',
             [
                 'form' => $form->createView(),
-                'user' => $user,
+                'user' => $user
             ]
         );
     }

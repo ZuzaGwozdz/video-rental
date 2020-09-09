@@ -14,10 +14,6 @@
                 <source>label_title</source>
                 <target>Title</target>
             </trans-unit>
-            <trans-unit id="label_content">
-                <source>label_content</source>
-                <target>Content</target>
-            </trans-unit>
             <trans-unit id="label_tags">
                 <source>label_tags</source>
                 <target>Tags</target>
@@ -49,6 +45,14 @@
             <trans-unit id="title_tape_edit">
                 <source>title_tape_edit</source>
                 <target>Edit tape #%id%</target>
+            </trans-unit>
+            <trans-unit id="title_tape_create">
+                <source>title_tape_create</source>
+                <target>Add new tape</target>
+            </trans-unit>
+             <trans-unit id="title_category_create">
+                <source>title_category_create</source>
+                <target>Add new category</target>
             </trans-unit>
             <trans-unit id="label_category">
                 <source>label_category</source>
@@ -122,18 +126,6 @@
                 <source>action_logout</source>
                 <target>Logout</target>
             </trans-unit>
-            <trans-unit id="title_start">
-                <source>title_start</source>
-                <target>Welcome!</target>
-            </trans-unit>
-            <trans-unit id="title_reservation_create">
-                <source>title_reservation_create</source>
-                <target>Create a reservation</target>
-            </trans-unit>
-            <trans-unit id="message_start">
-                <source>message_start</source>
-                <target>Welcome to our video rental store!</target>
-            </trans-unit>
             <trans-unit id="label_rent">
                 <source>label_rent</source>
                 <target>Send a reservation</target>
@@ -194,14 +186,6 @@
                 <source>label_admin</source>
                 <target>Admin</target>
             </trans-unit>
-            <trans-unit id="title_tape_create">
-                <source>title_tape_create</source>
-                <target>Create new tape</target>
-            </trans-unit>
-            <trans-unit id="title_category_create">
-                <source>title_category_create</source>
-                <target>Create new category</target>
-            </trans-unit>
             <trans-unit id="message_form_error">
                 <source>message_form_error</source>
                 <target>Form error</target>
@@ -230,13 +214,121 @@
                 <source>title_tag_delete</source>
                 <target>Delete tag #%id%</target>
             </trans-unit>
-            <trans-unit id="action_add_m">
-                <source>action_add_m</source>
-                <target>Add new</target>
-            </trans-unit>
             <trans-unit id="label_tapes_in_tag">
                 <source>label_tapes_in_tag</source>
                 <target>Tapes with this tag:</target>
+            </trans-unit>
+            <trans-unit id="message_item_not_found">
+                <source>message_item_not_found</source>
+                <target>Item not found</target>
+            </trans-unit>
+            <trans-unit id="label_no">
+                <source>label_no</source>
+                <target>No</target>
+            </trans-unit>
+            <trans-unit id="label_yes">
+                <source>label_yes</source>
+                <target>Yes</target>
+            </trans-unit>
+            <trans-unit id="label_author">
+                <source>label_author</source>
+                <target>Author</target>
+            </trans-unit>
+            <trans-unit id="label_tape">
+                <source>label_tape</source>
+                <target>Tape</target>
+            </trans-unit>
+            <trans-unit id="label_status">
+                <source>label_status</source>
+                <target>Confirmed</target>
+            </trans-unit>
+            <trans-unit id="action_decline">
+                <source>action_decline</source>
+                <target>decline</target>
+            </trans-unit>
+            <trans-unit id="action_return">
+                <source>action_return</source>
+                <target>Return</target>
+            </trans-unit>
+            <trans-unit id="label_user">
+                <source>label_user</source>
+                <target>User</target>
+            </trans-unit>
+            <trans-unit id="title_account_index">
+                <source>title_account_index</source>
+                <target>My account</target>
+            </trans-unit>
+            <trans-unit id="label_name">
+                <source>label_name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="label_surname">
+                <source>label_surname</source>
+                <target>Surname</target>
+            </trans-unit>
+            <trans-unit id="label_birthday">
+                <source>label_birthday</source>
+                <target>Birthday</target>
+            </trans-unit>
+            <trans-unit id="action_reset_password">
+                <source>action_reset_password</source>
+                <target>Change password</target>
+            </trans-unit>
+            <trans-unit id="app_forgot_password_request">
+                <source>app_forgot_password_request</source>
+                <target>Forgot my password</target>
+            </trans-unit>
+            <trans-unit id="action_back">
+                <source>action_back</source>
+                <target>Back</target>
+            </trans-unit>
+            <trans-unit id="title_user_list">
+                <source>title_user_list</source>
+                <target>User list</target>
+            </trans-unit>
+            <trans-unit id="title_user_view">
+                <source>title_user_view</source>
+                <target>View user #%id%</target>
+            </trans-unit>
+            <trans-unit id="title_user_edit">
+                <source>title_user_edit</source>
+                <target>Edit user #%id%</target>
+            </trans-unit>
+            <trans-unit id="label_nick">
+                <source>label_nick</source>
+                <target>Nick</target>
+            </trans-unit>
+            <trans-unit id="title_user_delete">
+                <source>title_user_delete</source>
+                <target>Delete user #%id%</target>
+            </trans-unit>
+            <trans-unit id="title_tag_create">
+                <source>title_tag_create</source>
+                <target>Add new tag</target>
+            </trans-unit>
+            <trans-unit id="title_user_create">
+                <source>title_user_create</source>
+                <target>Add new user</target>
+            </trans-unit>
+            <trans-unit id="label_user_data">
+                <source>label_user_data</source>
+                <target>User Data</target>
+            </trans-unit>
+            <trans-unit id="title_reservation_create">
+                <source>title_reservation_create</source>
+                <target>Create new reservation</target>
+            </trans-unit>
+            <trans-unit id="title_user_block">
+                <source>title_user_block</source>
+                <target>Block/Unblock user #%id%</target>
+            </trans-unit>
+            <trans-unit id="action_block">
+                <source>action_block</source>
+                <target>block</target>
+            </trans-unit>
+            <trans-unit id="action_unblock">
+                <source>action_unblock</source>
+                <target>unblock</target>
             </trans-unit>
         </body>
     </file>

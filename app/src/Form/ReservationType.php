@@ -51,18 +51,6 @@ class ReservationType extends AbstractType
                 'attr' => ['max_length' => 200],
             ]
         );
-
-        if($this->authorization->isGranted('ROLE_ADMIN'))
-        {
-            $builder->add(
-                'status',
-                CheckboxType::class,
-                [
-                    'label' => 'label_status',
-                    'required' => false,
-                ]
-            );        
-        }
     }
 
     /**

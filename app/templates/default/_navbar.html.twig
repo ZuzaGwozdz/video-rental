@@ -33,7 +33,7 @@
         <ul class="navbar-nav">
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('account_index') }}">{{ 'my_account'|trans }}</a>
+                    <a class="nav-link" href="{{ url('account_index') }}">{{ 'title_account_index'|trans }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('app_logout') }}">{{ 'action_logout'|trans }}</a>

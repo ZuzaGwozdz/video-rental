@@ -11,7 +11,6 @@ use App\Entity\Tape;
 use App\Form\DataTransformer\TagsDataTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -86,15 +85,6 @@ class TapeType extends AbstractType
         );
         $builder->get('tags')->addModelTransformer(
             $this->tagsDataTransformer
-        );
-
-        $builder->add(
-            'availability',
-            CheckboxType::class,
-            [
-                'label' => 'label_availability',
-                'required' => false,
-            ]
         );
     }
 
