@@ -13,7 +13,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use blackknight467\StarRatingBundle\Form\RatingType;
 
 /**
  * Class TapeType.
@@ -88,10 +87,6 @@ class TapeType extends AbstractType
         $builder->get('tags')->addModelTransformer(
             $this->tagsDataTransformer
         );
-
-        $builder->add('rating', RatingType::class, [
-            'label' => 'Rating',
-        ]);
 
         $builder->add('image', ImageType::class, [
             'label' => 'Image'

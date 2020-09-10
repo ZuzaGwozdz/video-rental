@@ -119,8 +119,6 @@ class ReservationController extends AbstractController
      * Create action.
      *
      * @param Request $request HTTP request
-     * @param ReservationRepository $reservationRepository Reservation repository
-     * @param TapeRepository $tapeRepository Tape repository
      * @param Tape $tape Tape entity
      *
      * @return Response HTTP response

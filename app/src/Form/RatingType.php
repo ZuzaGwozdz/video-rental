@@ -1,21 +1,20 @@
 <?php
 /**
- * Reservation type.
+ * Rating type.
  */
 
 namespace App\Form;
 
-use App\Entity\Reservation;
+use App\Entity\Rating;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use blackknight467\StarRatingBundle\Form\RatingType as StarRatingType;
 
 /**
- * Class ReservationType.
+ * Class RatingType.
  */
-class ReservationType extends AbstractType
+class RatingType extends AbstractType
 {
     /**
      * Builds the form.
@@ -23,22 +22,15 @@ class ReservationType extends AbstractType
      * This method is called for each type in the hierarchy starting from the
      * top most type. Type extensions can further modify the form.
      *
-     * @see FormTypeExtensionInterface::buildForm()
-     *
      * @param FormBuilderInterface $builder The form builder
      * @param array $options The options
+     *
+     * @see FormTypeExtensionInterface::buildForm()
+     *
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add(
-            'comment',
-            TextareaType::class,
-            [
-                'label' => 'label_comment',
-                'required' => false,
-                'attr' => ['max_length' => 200],
-            ]
-        );
+        $builder->add('note', StarRatingType::class,['label' => 'My note']);
     }
 
     /**
@@ -48,7 +40,7 @@ class ReservationType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => Reservation::class]);
+        $resolver->setDefaults(['data_class' => Rating::class]);
     }
 
     /**
@@ -61,6 +53,7 @@ class ReservationType extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'reservation';
+        return 'rating';
     }
+
 }

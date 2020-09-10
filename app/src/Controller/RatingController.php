@@ -1,14 +1,13 @@
 <?php
-/**
- * Tape Controller.
- */
 
+/**
+ * Rating Controller.
+ */
 namespace App\Controller;
 
-use App\Entity\Tape;
-use App\Form\TapeType;
-use App\Service\TapeService;
-use App\Repository\RatingRepository;
+use App\Entity\Rating;
+use App\Form\RatingType;
+use App\Service\RatingService;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -17,29 +16,32 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Tape;
 
 /**
- * Class TapeController.
+ * Class RatingController.
  *
- * @Route("/")
+ * @Route("/rating")
+ *
+ * @IsGranted("ROLE_USER")
  */
-class TapeController extends AbstractController
+class RatingController extends AbstractController
 {
     /**
-     * Tape service.
+     * Rating service.
      *
-     * @var TapeService
+     * @var RatingService
      */
-    private $tapeService;
+    private $ratingService;
 
     /**
-     * TapeController constructor.
+     * RatingController constructor.
      *
-     * @param TapeService $tapeService Tape service
+     * @param RatingService $ratingService Rating service
      */
-    public function __construct(TapeService $tapeService)
+    public function __construct(RatingService $ratingService)
     {
-        $this->tapeService = $tapeService;
+        $this->ratingService = $ratingService;
     }
     
     /**
@@ -52,19 +54,19 @@ class TapeController extends AbstractController
      * @Route(
      *     "/",
      *     methods={"GET"},
-     *     name="tape_index",
+     *     name="rating_index",
      * )
+     * 
+     * @IsGranted("ROLE_ADMIN")
      */
 
     public function index(Request $request): Response
     {
-        $pagination = $this->tapeService->createPaginatedList(
-            $request->query->getInt('page', 1),
-            $request->query->getAlnum('filters', [])
-        );
+        $page = $request->query->getInt('page', 1);
+        $pagination = $this->ratingService->createPaginatedList($page);
 
-        return $this-> render(
-            'tape/index.html.twig',
+        return $this->render(
+            'rating/index.html.twig',
             ['pagination' => $pagination]
         );
     }
@@ -72,35 +74,30 @@ class TapeController extends AbstractController
     /**
      * Show action.
      *
-     * @param Tape $tape Tape entity
+     * @param Rating $rating Rating entity
      *
-     * @return Response HTTP Response
+     * @return Response HTTP response
      *
      * @Route(
      *     "/{id}",
      *     methods={"GET"},
-     *     name="tape_show",
+     *     name="rating_show",
      *     requirements={"id": "[1-9]\d*"},
-     *     )
+     * )
      */
-
-    public function show(Tape $tape, RatingRepository $ratingRepository): Response
+    public function show(Rating $rating): Response
     {
-        $rating = $ratingRepository->findOneBy(['author'=>$this->getUser(), 'tape'=>$tape]);
-
-        return $this -> render(
-            'tape/show.html.twig',
-            [
-                'tape' => $tape,
-                'rating' => $rating
-            ]
+        return $this->render(
+            'rating/show.html.twig',
+            ['rating' => $rating]
         );
     }
 
     /**
      * Create action.
      *
-     * @param Request $request        HTTP request
+     * @param Request $request HTTP request
+     *  @param Tape $tape Tape entity
      *
      * @return Response HTTP response
      *
@@ -108,38 +105,42 @@ class TapeController extends AbstractController
      * @throws OptimisticLockException
      *
      * @Route(
-     *     "/create",
+     *     "/{id}/create",
      *     methods={"GET", "POST"},
-     *     name="tape_create",
-     * )
+     *     name="rating_create",
+     *     requirements={"id": "[1-9]\d*"},
+     *     )
      *
-     * @IsGranted("ROLE_ADMIN")
      */
-    public function create(Request $request): Response
+    public function create(Tape $tape, Request $request): Response
     {
-        $tape = new Tape();
-        $form = $this->createForm(TapeType::class, $tape);
+        $rating = new Rating();
+        $form = $this->createForm(RatingType::class, $rating);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $tape->setAvailability(1);
-            $this->tapeService->save($tape);
+            $rating->setTape($tape);
+            $rating->setAuthor($this->getUser());
+            $this->ratingService->save($rating);
             $this->addFlash('success', 'message_created_successfully');
 
-            return $this->redirectToRoute('tape_index');
+            return $this->redirectToRoute('tape_show', ['id'=> $tape->getId()]);
         }
 
         return $this->render(
-            'tape/create.html.twig',
-            ['form' => $form->createView()]
+            'rating/create.html.twig',
+            [
+                'form' => $form->createView(),
+                'tape' => $tape
+            ]
         );
     }
 
     /**
      * Edit action.
      *
-     * @param Request $request        HTTP request
-     * @param Tape                         $tape          Tape entity
+     * @param Request $request  HTTP request
+     * @param Rating $rating Rating entity
      *
      * @return Response HTTP response
      *
@@ -150,27 +151,27 @@ class TapeController extends AbstractController
      *     "/{id}/edit",
      *     methods={"GET", "PUT"},
      *     requirements={"id": "[1-9]\d*"},
-     *     name="tape_edit",
+     *     name="rating_edit",
      * )
-     *
-     * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(Request $request, Tape $tape): Response
+    public function edit(Request $request, Rating $rating): Response
     {
-        $form = $this->createForm(TapeType::class, $tape, ['method' => 'PUT']);
+        $form = $this->createForm(RatingType::class, $rating, ['method' => 'PUT']);
         $form->handleRequest($request);
+        $tape = $rating->getTape();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->tapeService->save($tape);
+            $this->ratingService->save($rating);
             $this->addFlash('success', 'message_updated_successfully');
 
-            return $this->redirectToRoute('tape_index');
+            return $this->redirectToRoute('tape_show', ['id'=> $tape->getId()]);
         }
 
         return $this->render(
-            'tape/edit.html.twig',
+            'rating/create.html.twig',
             [
                 'form' => $form->createView(),
+                'rating' => $rating,
                 'tape' => $tape,
             ]
         );
@@ -179,8 +180,8 @@ class TapeController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request $request        HTTP request
-     * @param Tape                          $tape           Tape entity
+     * @param Request $request  HTTP request
+     * @param Rating $rating Rating entity
      *
      * @return Response HTTP response
      *
@@ -191,14 +192,14 @@ class TapeController extends AbstractController
      *     "/{id}/delete",
      *     methods={"GET", "DELETE"},
      *     requirements={"id": "[1-9]\d*"},
-     *     name="tape_delete",
+     *     name="rating_delete",
      * )
      *
      * @IsGranted("ROLE_ADMIN")
      */
-    public function delete(Request $request, Tape $tape): Response
+    public function delete(Request $request, Rating $rating): Response
     {
-        $form = $this->createForm(FormType::class, $tape, ['method' => 'DELETE']);
+        $form = $this->createForm(FormType::class, $rating, ['method' => 'DELETE']);
         $form->handleRequest($request);
 
         if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
@@ -206,17 +207,17 @@ class TapeController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->tapeService->delete($tape);
+            $this->ratingService->delete($rating);
             $this->addFlash('success', 'message_deleted_successfully');
 
-            return $this->redirectToRoute('tape_index');
+            return $this->redirectToRoute('rating_index');
         }
 
         return $this->render(
-            'tape/delete.html.twig',
+            'rating/delete.html.twig',
             [
                 'form' => $form->createView(),
-                'tape' => $tape,
+                'rating' => $rating,
             ]
         );
     }

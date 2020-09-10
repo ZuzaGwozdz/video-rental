@@ -120,14 +120,14 @@ class Tape
     private $availability;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $rating;
-
-    /**
      * @ORM\OneToOne(targetEntity=Image::class, mappedBy="tape", cascade={"persist", "remove"})
      */
     private $image;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Rating::class, mappedBy="tape", orphanRemoval=true)
+     */
+    private $ratings;
 
     /**
      * Tape constructor.
@@ -135,6 +135,7 @@ class Tape
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
     }
 
     /**
@@ -145,6 +146,26 @@ class Tape
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * Getter for Rating
+     *
+     * @return int|null Result
+     */
+    public function getRating(): ?int
+    {
+        $total = 0;
+
+        $count = count($this->getRatings());
+
+        foreach ($this->getRatings() as $rating){
+            $total = $total + $rating->getNote();
+        }
+
+        $this->rating = $total / $count;
+
+        return $this->rating;
     }
 
     /**
@@ -281,16 +302,6 @@ class Tape
         $this->availability = $availability;
     }
 
-    public function getRating(): ?int
-    {
-        return $this->rating;
-    }
-
-    public function setRating(?int $rating): void
-    {
-        $this->rating = $rating;
-    }
-
     public function getImage(): ?Image
     {
         return $this->image;
@@ -305,5 +316,36 @@ class Tape
         if ($image->getTape() !== $newTape) {
             $image->setTape($newTape);
         }
+    }
+
+    /**
+     * @return Collection|Rating[]
+     */
+    public function getRatings(): Collection
+    {
+        return $this->ratings;
+    }
+
+    public function addRating(Rating $rating): self
+    {
+        if (!$this->ratings->contains($rating)) {
+            $this->ratings[] = $rating;
+            $rating->setTape($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRating(Rating $rating): self
+    {
+        if ($this->ratings->contains($rating)) {
+            $this->ratings->removeElement($rating);
+            // set the owning side to null (unless already changed)
+            if ($rating->getTape() === $this) {
+                $rating->setTape(null);
+            }
+        }
+
+        return $this;
     }
 }

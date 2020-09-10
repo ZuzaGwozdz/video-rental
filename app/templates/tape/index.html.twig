@@ -23,6 +23,7 @@
                 <th>{{ knp_pagination_sortable(pagination, 'label_created_at'|trans, 'tape.createdAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_updated_at'|trans, 'tape.updatedAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_category'|trans, 'category.title') }}</th>
+                <th>{{'label_rating'|trans }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_availability'|trans, 'tape.availability') }}</th>
                 <th>{{ 'label_actions'|trans }}</th>
             </tr>
@@ -38,6 +39,11 @@
                             {{ tape.category.title }}
                         </a>
                     </td>
+                    {% if tape.ratings|length %}
+                        <td>{{ tape.rating|rating(5, "fa-8x") }}</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %} 
                     {% if tape.availability == 0 %}
                         <td>{{ 'label_no'|trans }}</td>
                     {% else %}

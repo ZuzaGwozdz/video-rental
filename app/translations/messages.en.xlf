@@ -314,6 +314,10 @@
                 <source>label_user_data</source>
                 <target>User Data</target>
             </trans-unit>
+            <trans-unit id="label_rating">
+                <source>label_rating</source>
+                <target>Rating</target>
+            </trans-unit>
             <trans-unit id="title_reservation_create">
                 <source>title_reservation_create</source>
                 <target>Create new reservation</target>
@@ -321,6 +325,14 @@
             <trans-unit id="title_user_block">
                 <source>title_user_block</source>
                 <target>Block/Unblock user #%id%</target>
+            </trans-unit>
+            <trans-unit id="label_note">
+                <source>label_note</source>
+                <target>Note</target>
+            </trans-unit>
+            <trans-unit id="label_rate">
+                <source>label_rate</source>
+                <target>Rate</target>
             </trans-unit>
             <trans-unit id="action_block">
                 <source>action_block</source>
