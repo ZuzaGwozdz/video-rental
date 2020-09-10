@@ -39,6 +39,13 @@ class Reservation
      *     nullable=true,
      *     length=200,
      *     )
+     *
+     * @Assert\Type(type="string")
+     * 
+     * @Assert\Length(
+     *     min="3",
+     *     max="200",
+     *     )
      */
     private $comment;
 
@@ -54,6 +61,19 @@ class Reservation
      * @Gedmo\Timestampable(on="create")
      */
     private $createdAt;
+
+    /**
+     * Updated at.
+     *
+     * @var DateTimeInterface
+     *
+     * @ORM\Column(type="datetime")
+     *
+     * @Assert\DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $updatedAt;
 
     /**
      * Author.
@@ -82,7 +102,16 @@ class Reservation
     private $tape;
 
     /**
-     * @ORM\Column(type="boolean", options={"default" : 0})
+     * Status.
+     * 
+     * @var boolean
+     * 
+     * @ORM\Column(
+     *      type="boolean", 
+     *      options={"default" : 0},
+     *      )
+     * 
+     * @Assert\Type(type="boolean")
      */
     private $status;
 
@@ -156,33 +185,81 @@ class Reservation
         $this->createdAt = $createdAt;
     }
 
+    /**
+     * Getter for Updated at.
+     *
+     * @return DateTimeInterface|null Updated at
+     */
+    public function getUpdatedAt(): ?DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Setter for Updated at.
+     *
+     * @param DateTimeInterface $updatedAt Updated at
+     */
+    public function setUpdatedAt(DateTimeInterface $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * Getter for Author.
+     *
+     * @return User|null User
+     */
     public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(?User $author): self
+    /**
+     * Setter for Author.
+     *
+     * @param User $author User
+     */
+    public function setAuthor(?User $author): void
     {
         $this->author = $author;
-
-        return $this;
     }
 
+    /**
+     * Getter for Tape.
+     *
+     * @return Tape|null Tapes
+     */
     public function getTape(): ?Tape
     {
         return $this->tape;
     }
 
+    /**
+     * Setter for Tape.
+     *
+     * @param Tape $tape Tape
+     */
     public function setTape(?Tape $tape): void
     {
         $this->tape = $tape;
     }
 
+    /**
+     * Getter for Status.
+     *
+     * @return bool|null Status
+     */
     public function getStatus(): ?bool
     {
         return $this->status;
     }
 
+    /**
+     * Setter for Status.
+     *
+     * @param bool $status Status
+     */
     public function setStatus(bool $status): void
     {
         $this->status = $status;

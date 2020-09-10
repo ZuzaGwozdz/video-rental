@@ -6,15 +6,14 @@
 namespace App\Form;
 
 use App\Entity\Category;
-use App\Entity\Tag;
 use App\Entity\Tape;
 use App\Form\DataTransformer\TagsDataTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use blackknight467\StarRatingBundle\Form\RatingType;
 
 /**
  * Class TapeType.
@@ -61,6 +60,7 @@ class TapeType extends AbstractType
                 'attr' => ['max_length' => 255],
             ]
         );
+
         $builder->add(
             'category',
             EntityType::class,
@@ -74,6 +74,7 @@ class TapeType extends AbstractType
                 'required' => true,
             ]
         );
+
         $builder->add(
             'tags',
             TextType::class,
@@ -83,9 +84,18 @@ class TapeType extends AbstractType
                 'attr' => ['max_length' => 128],
             ]
         );
+
         $builder->get('tags')->addModelTransformer(
             $this->tagsDataTransformer
         );
+
+        $builder->add('rating', RatingType::class, [
+            'label' => 'Rating',
+        ]);
+
+        $builder->add('image', ImageType::class, [
+            'label' => 'Image'
+        ]);
     }
 
     /**

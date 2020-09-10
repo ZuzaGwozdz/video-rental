@@ -14,6 +14,30 @@
                 <source>message_empty_list</source>
                 <target>Lista jest pusta.</target>
             </trans-unit>
+            <trans-unit id="message_updated_successfully">
+                <source>message_updated_successfully</source>
+                <target>Zaktualizowano pomyślnie!</target>
+            </trans-unit>
+            <trans-unit id="message_deleted_successfully">
+                <source>message_delated_successfully</source>
+                <target>Usunięto pomyślnie!</target>
+            </trans-unit>
+            <trans-unit id="message_created_successfully">
+                <source>message_created_successfully</source>
+                <target>Stworzono pomyślnie!</target>
+            </trans-unit>
+            <trans-unit id="message_confirmed_successfully">
+                <source>message_confirmed_successfully</source>
+                <target>Rezerwacja potwierdzona pomyślnie</target>
+            </trans-unit>
+            <trans-unit id="message_category_contains_tasks">
+                <source>message_category_contains_tasks</source>
+                <target>Istnieją kasety w tej kategorii!</target>
+            </trans-unit>
+            <trans-unit id="message_tag_contains_tasks">
+                <source>message_tag_contains_tasks</source>
+                <target>Istnieją kasety z tym tagiem!</target>
+            </trans-unit>
             <trans-unit id="label_created_at">
                 <source>label_created_at</source>
                 <target>Stworzona</target>
@@ -69,6 +93,18 @@
             <trans-unit id="title_tape_edit">
                 <source>title_tape_edit</source>
                 <target>Edytuj kasetę #%id%</target>
+            </trans-unit>
+            <trans-unit id="title_reservation_edit">
+                <source>title_reservation_edit</source>
+                <target>Edytuj rezerwację #%id%</target>
+            </trans-unit>
+            <trans-unit id="title_reservation_return">
+                <source>title_reservation_return</source>
+                <target>Zwróć kasetę #%id%</target>
+            </trans-unit>
+            <trans-unit id="title_reservation_confirm">
+                <source>title_reservation_confirm</source>
+                <target>Potwierdź rezerwację #%id%</target>
             </trans-unit>
             <trans-unit id="action_save">
                 <source>action_save</source>
@@ -212,7 +248,7 @@
             </trans-unit>
             <trans-unit id="action_return">
                 <source>action_return</source>
-                <target>Zwróć</target>
+                <target>zwróć</target>
             </trans-unit>
             <trans-unit id="title_account_index">
                 <source>title_account_index</source>
@@ -232,7 +268,7 @@
             </trans-unit>
             <trans-unit id="action_reset_password">
                 <source>action_reset_password</source>
-                <target>Zmień hasło</target>
+                <target>Zresetuj hasło</target>
             </trans-unit>
             <trans-unit id="title_user_edit">
                 <source>title_user_edit</source>
@@ -284,7 +320,11 @@
             </trans-unit>
             <trans-unit id="title_user_block">
                 <source>title_user_block</source>
-                <target>Zablokuj/Odblokuj użytkownika #%id%</target>
+                <target>Zablokuj użytkownika #%id%</target>
+            </trans-unit>
+             <trans-unit id="title_user_unblock">
+                <source>title_user_unblock</source>
+                <target>Odblokuj użytkownika #%id%</target>
             </trans-unit>
             <trans-unit id="action_block">
                 <source>action_block</source>
@@ -293,6 +333,38 @@
             <trans-unit id="action_unblock">
                 <source>action_unblock</source>
                 <target>odblokuj</target>
+            </trans-unit>
+            <trans-unit id="action_sign_in">
+                <source>action_sign_in</source>
+                <target>Zaloguj się</target>
+            </trans-unit>
+            <trans-unit id="label_password">
+                <source>label_password</source>
+                <target>Hasło</target>
+            </trans-unit>
+            <trans-unit id="app_login">
+                <source>app_login</source>
+                <target>Proszę zaloguj się</target>
+            </trans-unit>
+            <trans-unit id="logged_in_as">
+                <source>logged_in_as</source>
+                <target>Jesteś zalogowany jako </target>
+            </trans-unit>
+            <trans-unit id="send_password_reset_email">
+                <source>send_password_reset_email</source>
+                <target>Wyślij email do zresetowania hasła</target>
+            </trans-unit>
+            <trans-unit id="reset_email_text">
+                <source>reset_email_text</source>
+                <target>Wpisz adres email na którego wyślemy link do zresetowania hasła.</target>
+            </trans-unit>
+            <trans-unit id="password_changed_successfully">
+                <source>password_changed_successfully</source>
+                <target>Hasło zresetowane pomyślnie</target>
+            </trans-unit>
+            <trans-unit id="title_reservation_decline">
+                <source>title_reservation_decline</source>
+                <target>Odrzuć rezerwację</target>
             </trans-unit>
         </body>
     </file>

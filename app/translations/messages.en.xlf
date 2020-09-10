@@ -330,6 +330,18 @@
                 <source>action_unblock</source>
                 <target>unblock</target>
             </trans-unit>
+            <trans-unit id="logged_in_as">
+                <source>logged_in_as</source>
+                <target>You are logged in as </target>
+            </trans-unit>
+            <trans-unit id="send_password_reset_email">
+                <source>send_password_reset_email</source>
+                <target>Send password reset email</target>
+            </trans-unit>
+            <trans-unit id="reset_email_text">
+                <source>reset_email_text</source>
+                <target>Enter your email address and we we will send you a link to reset your password.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

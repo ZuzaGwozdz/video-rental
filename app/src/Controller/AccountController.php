@@ -5,14 +5,12 @@
  */
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Form\UserType;
 use App\Service\UserService;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,10 +35,18 @@ class AccountController extends AbstractController
     private $userService;
 
     /**
+     * Security helper.
+     * 
      * @var Security
      */
     private $security;
 
+    /**
+     * AccountController constructor.
+     *
+     * @param Security $security Security helper
+     * @param UserService $userService User service
+     */
     public function __construct(Security $security, UserService $userService)
     {
        $this->security = $security;

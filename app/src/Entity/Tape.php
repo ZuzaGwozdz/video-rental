@@ -114,8 +114,20 @@ class Tape
      * @var boolean
      *
      * @ORM\Column(type="boolean")
+     * 
+     * @Assert\Type(type="boolean")
      */
     private $availability;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $rating;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Image::class, mappedBy="tape", cascade={"persist", "remove"})
+     */
+    private $image;
 
     /**
      * Tape constructor.
@@ -267,5 +279,31 @@ class Tape
     public function setAvailability(bool $availability): void
     {
         $this->availability = $availability;
+    }
+
+    public function getRating(): ?int
+    {
+        return $this->rating;
+    }
+
+    public function setRating(?int $rating): void
+    {
+        $this->rating = $rating;
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(?Image $image): void
+    {
+        $this->image = $image;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newTape = null === $image ? null : $this;
+        if ($image->getTape() !== $newTape) {
+            $image->setTape($newTape);
+        }
     }
 }

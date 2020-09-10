@@ -1,51 +1,44 @@
 <?php
 /**
- * Reservation type.
+ * Image type.
  */
 
 namespace App\Form;
 
-use App\Entity\Reservation;
+use App\Entity\Image;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 /**
- * Class ReservationType.
+ * Class ImageType.
  */
-class ReservationType extends AbstractType
+class ImageType extends AbstractType
 {
-    private $authorization;
-
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
-    {
-        $this->authorization = $authorizationChecker;
-    }
-
     /**
      * Builds the form.
      *
      * This method is called for each type in the hierarchy starting from the
      * top most type. Type extensions can further modify the form.
      *
-     * @see FormTypeExtensionInterface::buildForm()
-     *
      * @param FormBuilderInterface $builder The form builder
      * @param array $options The options
+     *
+     * @see FormTypeExtensionInterface::buildForm()
+     *
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add(
-            'comment',
-            TextareaType::class,
-            [
-                'label' => 'label_comment',
-                'required' => false,
-                'attr' => ['max_length' => 200],
-            ]
-        );
+        $builder->add('imageFile', VichImageType::class, [
+            'required' => false,
+            'allow_delete' => true,
+            'delete_label' => 'Delete',
+            'image_uri' => true,
+            'download_uri' => false,
+            'asset_helper' => true,
+            'label' => false,
+        ]);
     }
 
     /**
@@ -55,7 +48,7 @@ class ReservationType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['data_class' => Reservation::class]);
+        $resolver->setDefaults(['data_class' => Image::class]);
     }
 
     /**
@@ -68,6 +61,7 @@ class ReservationType extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'reservation';
+        return 'image';
     }
+
 }

@@ -1,7 +1,15 @@
+{% if user.userData.blocked == 0 %}
+    {% set title = 'title_user_block' %}
+    {% set action = 'action_block' %}
+{% else %}
+    {% set title = 'title_user_unblock' %}
+    {% set action = 'action_unblock' %}
+{% endif %}
+
 {% include 'default/_form.html.twig' with {
-    page_title: 'title_user_block',
+    page_title: title,
     page_title_param: {'%id%': user.id},
-    submit_label: 'action_block'|trans ,
+    submit_label: action|trans ,
     attr: {
         action: url('user_block', {'id': user.id}),
     },

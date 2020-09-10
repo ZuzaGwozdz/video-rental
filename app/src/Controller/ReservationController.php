@@ -8,6 +8,8 @@ namespace App\Controller;
 use App\Entity\Reservation;
 use App\Entity\Tape;
 use App\Form\ReservationType;
+use App\Service\TapeService;
+use App\Service\ReservationService;
 use App\Repository\ReservationRepository;
 use App\Repository\TapeRepository;
 use Doctrine\ORM\OptimisticLockException;
@@ -24,9 +26,37 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class ReservationController
  *
  * @Route("/reservation")
+ * 
+ * @IsGranted("ROLE_USER")
  */
 class ReservationController extends AbstractController
 {
+    /**
+     * Reservation service.
+     *
+     * @var ReservationService
+     */
+    private $reservationService;
+
+    /**
+     * Tape service.
+     *
+     * @var TapeService
+     */
+    private $tapeService;
+
+    /**
+     * ReservationController constructor.
+     *
+     * @param ReservationService $reservationService Reservation service
+     * @param TapeService $tapeService Tape service
+     */
+    public function __construct(ReservationService $reservationService, TapeService $tapeService)
+    {
+        $this->reservationService = $reservationService;
+        $this->tapeService = $tapeService;
+    }
+
     /**
      * Index action.
      *
@@ -47,21 +77,14 @@ class ReservationController extends AbstractController
     {
         if ($this->isGranted('ROLE_ADMIN'))
         {
-            $pagination = $paginator->paginate(
-                $reservationRepository->queryAll(),
-                $request->query->getInt('page', 1),
-                ReservationRepository::PAGINATOR_ITEMS_PER_PAGE
-            );
+            $page = $request->query->getInt('page', 1);
+            $pagination = $this->reservationService->createPaginatedList($page);
         }
         else
         {
-            $pagination = $paginator->paginate(
-                $reservationRepository->queryByAuthor($this->getUser()),
-                $request->query->getInt('page', 1),
-                ReservationRepository::PAGINATOR_ITEMS_PER_PAGE
-            );
+            $page = $request->query->getInt('page', 1);
+            $pagination = $this->reservationService->createPaginatedListByAuthor($page, $this->getuser());
         }
-
 
         return $this-> render(
             'reservation/index.html.twig',
@@ -86,7 +109,6 @@ class ReservationController extends AbstractController
 
     public function show(Reservation $reservation): Response
     {
-
         return $this -> render(
             'reservation/show.html.twig',
             ['reservation' => $reservation]
@@ -112,7 +134,7 @@ class ReservationController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      *     )
      */
-    public function create(Request $request, ReservationRepository $reservationRepository, TapeRepository $tapeRepository, Tape $tape): Response
+    public function create(Request $request, Tape $tape): Response
     {
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
@@ -122,8 +144,9 @@ class ReservationController extends AbstractController
             $reservation->setAuthor($this->getUser());
             $reservation->setTape($tape);
             $reservation->setStatus(0);
-            $reservationRepository->save($reservation);
-            $tapeRepository->save($tape);
+
+            $this->reservationService->save($reservation);
+            $this->tapeService->save($tape);
 
             $this->addFlash('sucess', 'message_created_successfully');
 
@@ -159,11 +182,10 @@ class ReservationController extends AbstractController
      *     )
      */
 
-    public function edit(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
+    public function edit(Request $request, Reservation $reservation): Response
     {
         if ($reservation->getAuthor() !== $this->getUser()) {
            $this->addFlash('warning', 'message.item_not_found');
-
            return $this->redirectToRoute('reservation_index');
         }
 
@@ -171,8 +193,7 @@ class ReservationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $reservationRepository->save($reservation);
-
+            $this->reservationService->save($reservation);
             $this->addFlash('success', 'message_updated_successfully');
 
             return $this->redirectToRoute('reservation_index');
@@ -207,11 +228,10 @@ class ReservationController extends AbstractController
      *     name="reservation_delete",
      *     )
      */
-    public function delete(Request $request, Reservation $reservation, ReservationRepository $reservationRepository, TapeRepository $tapeRepository): Response
+    public function delete(Request $request, Reservation $reservation): Response
     {
         if ($reservation->getAuthor() !== $this->getUser()) {
-            $this->addFlash('warning', 'message.item_not_found');
-
+            $this->addFlash('warning', 'message_item_not_found');
             return $this->redirectToRoute('reservation_index');
         }
 
@@ -225,8 +245,9 @@ class ReservationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $tape = $reservation->getTape();
             $tape->setAvailability(1);
-            $tapeRepository->save($tape);
-            $reservationRepository->delete($reservation);
+            $this->tapeService->save($tape);
+            $this->reservationService->delete($reservation);
+
             $this->addFlash('success', 'message_deleted_successfully');
 
             return $this->redirectToRoute('reservation_index');
@@ -262,10 +283,8 @@ class ReservationController extends AbstractController
      *
      * @IsGranted("ROLE_ADMIN")
      */
-
     public function confirm(Request $request, Reservation $reservation, ReservationRepository $reservationRepository, TapeRepository $tapeRepository): Response
     {
-
         $form = $this->createForm(FormType::class, $reservation, ['method' => 'PUT']);
         $form->handleRequest($request);
 
@@ -277,10 +296,10 @@ class ReservationController extends AbstractController
             $reservation->setStatus(1);
             $tape = $reservation->getTape();
             $tape->setAvailability(0);
-            $tapeRepository->save($tape);
-            $reservationRepository->save($reservation);
+            $this->tapeService->save($tape);
+            $this->reservationService->save($reservation);
 
-            $this->addFlash('sucess', 'message_confirmed');
+            $this->addFlash('success', 'message_confirmed_successfully');
 
             return $this->redirectToRoute('reservation_index');
         }

@@ -18,6 +18,7 @@
         <table class="table table-hover">
             <thead>
             <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'label_id'|trans, 'tape.id') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_title'|trans, 'tape.title') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_created_at'|trans, 'tape.createdAt') }}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'label_updated_at'|trans, 'tape.updatedAt') }}</th>
@@ -29,6 +30,7 @@
             <tbody class="table-info">
             {% for tape in pagination.items %}
                 <tr>
+                    <td>{{ tape.id }}</td>
                     <td>{{ tape.title }}</td>
                     <td>{{ tape.createdAt|format_date('long') }}</td>
                     <td>{{ tape.updatedAt|format_date('long') }}</td>

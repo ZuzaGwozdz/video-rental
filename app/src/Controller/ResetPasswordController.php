@@ -1,4 +1,7 @@
 <?php
+/**
+ * Reset Password controller.
+ */
 
 namespace App\Controller;
 
@@ -19,6 +22,8 @@ use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
 /**
+ * Class ResetPasswordController.
+ * 
  * @Route("/reset-password")
  */
 class ResetPasswordController extends AbstractController

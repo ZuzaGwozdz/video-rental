@@ -7,11 +7,9 @@ namespace App\Controller;
 
 use App\Entity\Tape;
 use App\Form\TapeType;
-use App\Repository\TapeRepository;
 use App\Service\TapeService;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -23,7 +21,6 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class TapeController.
  *
  * @Route("/")
- *
  */
 class TapeController extends AbstractController
 {
@@ -84,7 +81,6 @@ class TapeController extends AbstractController
      *     name="tape_show",
      *     requirements={"id": "[1-9]\d*"},
      *     )
-     *
      */
 
     public function show(Tape $tape): Response

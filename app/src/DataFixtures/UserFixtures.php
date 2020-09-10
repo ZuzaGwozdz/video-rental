@@ -14,6 +14,10 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserFixtures extends AbstractBaseFixtures
 {
+    public const USER = 'user';
+
+    public const ADMIN = 'admin';
+
     /**
      * Password encoder.
      *
@@ -49,6 +53,7 @@ class UserFixtures extends AbstractBaseFixtures
                     'user1234'
                 )
             );
+            $this->setReference(self::USER . $i, $user);
 
             return $user;
         });
@@ -64,6 +69,7 @@ class UserFixtures extends AbstractBaseFixtures
                     'admin1234'
                 )
             );
+            $this->setReference(self::ADMIN . $i, $user);
 
             return $user;
         });

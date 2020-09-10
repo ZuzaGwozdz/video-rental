@@ -1,8 +1,8 @@
 <?php
-
 /**
  * User Controller.
  */
+
 namespace App\Controller;
 
 use App\Entity\User;
@@ -87,42 +87,6 @@ class UserController extends AbstractController
         return $this->render(
             'user/show.html.twig',
             ['user' => $user]
-        );
-    }
-
-    /**
-     * Create action.
-     *
-     * @param Request $request HTTP request
-     *
-     * @return Response HTTP response
-     *
-     * @throws ORMException
-     * @throws OptimisticLockException
-     *
-     * @Route(
-     *     "/create",
-     *     methods={"GET", "POST"},
-     *     name="user_create",
-     * )
-     *
-     */
-    public function create(Request $request): Response
-    {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->userService->save($user);
-            $this->addFlash('success', 'message_created_successfully');
-
-            return $this->redirectToRoute('user_index');
-        }
-
-        return $this->render(
-            'user/create.html.twig',
-            ['form' => $form->createView()]
         );
     }
 

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}{{ 'app_login'|trans }}{% endblock %}
 
 {% block body %}
 <form method="post">
@@ -10,19 +10,19 @@
 
     {% if app.user %}
         <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            {{ 'logged_in_as'|trans }}{{ app.user.username }}, <a href="{{ path('app_logout') }}">{{ 'action_logout'|trans }}</a>
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
+    <h1 class="h3 mb-3 font-weight-normal">{{ 'app_login'|trans }}</h1>
+    <label for="inputEmail">{{ 'label_email'|trans }}</label>
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Password</label>
+    <label for="inputPassword">{{ 'label_password'|trans }}</label>
     <input type="password" name="password" id="inputPassword" class="form-control" required>
 
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
-    >
+    ><br>
 
     {#
         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
@@ -36,7 +36,7 @@
     #}
 
     <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
+        {{ 'action_sign_in'|trans }}
     </button>
 
     <a href="{{ path('app_forgot_password_request') }}" class="btn btn-lg btn-primary">

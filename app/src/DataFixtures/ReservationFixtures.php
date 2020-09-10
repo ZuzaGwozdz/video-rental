@@ -21,11 +21,12 @@ class ReservationFixtures extends AbstractBaseFixtures implements DependentFixtu
      */
     public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(5, 'reservations', function ($i) {
+        $this->createMany(10, 'reservations', function ($i) {
             $reservation = new Reservation();
             $reservation->setComment($this->faker->text(100));
             $reservation->setCreatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
-            $reservation->setAuthor($this->getRandomReference('users'));
+            $reservation->setUpdatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
+            $reservation->setAuthor($this->getReference(UserFixtures::USER . $i));
             $reservation->setTape($this->getRandomReference('tapes'));
             $reservation->setStatus($this->faker->boolean);
 

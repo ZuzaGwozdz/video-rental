@@ -100,6 +100,7 @@ class Tag
 
     /**
      * Tapes.
+     * 
      * @var ArrayCollection|Tape[] Tapes
      *
      * @ORM\ManyToMany(
@@ -107,8 +108,6 @@ class Tag
      *      mappedBy="tags",
      *     fetch="EXTRA_LAZY",
      *     )
-     *
-     *
      */
     private $tapes;
 

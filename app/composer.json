@@ -5,10 +5,12 @@
         "php": "^7.4.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "blackknight467/star-rating-bundle": "2.*",
         "doctrine/doctrine-bundle": "*",
         "doctrine/doctrine-migrations-bundle": "*",
         "doctrine/orm": "*",
         "knplabs/knp-paginator-bundle": "^5.1",
+        "liip/imagine-bundle": "^2.3",
         "sensio/framework-extra-bundle": "^5.1",
         "stof/doctrine-extensions-bundle": "^1.4",
         "symfony/asset": "4.4.*",
@@ -25,6 +27,7 @@
         "symfony/process": "4.4.*",
         "symfony/security-bundle": "4.4.*",
         "symfony/serializer-pack": "*",
+        "symfony/templating": "4.4.*",
         "symfony/translation": "4.4.*",
         "symfony/twig-bundle": "4.4.*",
         "symfony/validator": "4.4.*",
@@ -33,7 +36,8 @@
         "symfonycasts/reset-password-bundle": "^1.1",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/intl-extra": "^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "vich/uploader-bundle": "^1.15"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",

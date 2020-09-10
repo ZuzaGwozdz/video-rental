@@ -1,10 +1,18 @@
+{% if reservation.status == 0 %}
+    {% set title = 'title_reservation_decline' %}
+    {% set action = 'action_decline' %}
+{% else %}
+    {% set title = 'title_reservation_return' %}
+    {% set action = 'action_return' %}
+{% endif %}
+
 {% include 'default/_form.html.twig' with {
-    page_title: 'title_reservation_decline',
-    page_title_param: {'%id%': reservation.id},
+    page_title: title,
+    page_title_param: {'%id%': reservation.tape.id},
     attr: {
         method: 'DELETE',
         action: url('reservation_delete', {'id': reservation.id}),
     },
     back_to_list_path: 'reservation_index',
-    submit_label: 'Decline',
+    submit_label: action,
 } %}

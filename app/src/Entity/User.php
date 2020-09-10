@@ -85,17 +85,39 @@ class User implements UserInterface
     private $password;
 
     /**
+     * Plain password.
+     * 
+     * @var string
+     * 
      * @Assert\Length(max=4096)
      */
     private $plainPassword;
 
     /**
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * Nick.
+     * 
+     * @var string
+     * 
+     * @ORM\Column(
+     *      type="string", 
+     *      length=64,
+     *      )
+     * 
+     * @Assert\Length(max=64)
+     * @Assert\Type(type="string")
      */
     private $nick;
 
     /**
-     * @ORM\OneToOne(targetEntity=UserData::class, mappedBy="user", cascade={"persist", "remove"})
+     * User Data.
+     * 
+     * @var UserData
+     * 
+     * @ORM\OneToOne(
+     *      targetEntity=UserData::class,   
+     *      mappedBy="user", 
+     *      cascade={"persist", "remove"}
+     *      )
      */
     private $userData;
 
@@ -189,11 +211,21 @@ class User implements UserInterface
         $this->password = $password;
     }
 
+    /**
+     * Getter for Plain Password.
+     *
+     * @return string $plainPassword
+     */
     public function getPlainPassword()
     {
         return $this->plainPassword;
     }
 
+    /**
+     * Setter for Plain Password.
+     *
+     * @param string $plainPassword
+     */
     public function setPlainPassword($password)
     {
         $this->plainPassword = $password;
@@ -216,35 +248,41 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
+    /**
+     * Getter for Nick.
+     *
+     * @return string $nick
+     */
     public function getNick(): ?string
     {
         return $this->nick;
     }
 
-    public function setNick(?string $nick): self
+    /**
+     * Setter for Nick.
+     *
+     * @param string $nick
+     */
+    public function setNick(?string $nick): void
     {
         $this->nick = $nick;
-
-        return $this;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(?string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
+    /**
+     * Getter for User Data.
+     *
+     * @return UserData $userData
+     */
     public function getUserData(): ?UserData
     {
         return $this->userData;
     }
 
+    /**
+     * Setter for User Data.
+     *
+     * @param UserData $userData
+     */
     public function setUserData(UserData $userData): void
     {
         $this->userData = $userData;

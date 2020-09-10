@@ -1,4 +1,7 @@
 <?php
+/**
+ * Registration Controller.
+ */
 
 namespace App\Controller;
 
@@ -12,6 +15,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
+/**
+ * Class RegistrationController.
+ */
 class RegistrationController extends AbstractController
 {
     /**
@@ -32,6 +38,8 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            $user->setRoles([User::ROLE_USER]);
+            $user->getUserData()->setBlocked(0);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
