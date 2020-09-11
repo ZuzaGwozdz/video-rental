@@ -34,27 +34,27 @@
                         {% endfor %}
                     {% endif %}
                 </dd>
+    {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN') %}
                 <dt>My Note</dt>
-                {% if rating %}
-                    <dd>{{ rating.note|rating }}</dd><br>
-                    <a href="{{ url('rating_edit', {id: rating.id}) }}" class="btn btn-primary" title="{{ 'label_rate'|trans }}">{{ 'label_rate'|trans }}</a>
-                {% else %}
-                    <dd><a href="{{ url('rating_create', {id: tape.id}) }}" class="btn btn-primary" title="{{ 'label_rate'|trans }}">{{ 'label_rate'|trans }}</a></dd>
-                {% endif %}
+                    {% if rating %}
+                        <dd>{{ rating.note|rating }}</dd><br>
+                        <a href="{{ url('rating_edit', {id: rating.id}) }}" class="btn btn-light" title="{{ 'label_rate'|trans }}">{{ 'label_rate'|trans }}</a>
+                    {% else %}
+                        <dd><a href="{{ url('rating_create', {id: tape.id}) }}" class="btn btn-light" title="{{ 'label_rate'|trans }}">{{ 'label_rate'|trans }}</a></dd>
+                    {% endif %}
             </dl>
         </div>
     </div>
     <div class="row">
         <div class="col">
-        {% if not is_granted('ROLE_ADMIN') %}
-            {% if tape.availability == 1 %}
-                <a href="{{ url('reservation_create', {id: tape.id}) }}" title="{{ 'label_rent'|trans }}">{{ 'label_rent'|trans }}</a>
-            {% else %}
-                {{ 'label_not_available'|trans }}
-            {% endif %}
+        {% if tape.availability == 1 %}
+            <a href="{{ url('reservation_create', {id: tape.id}) }}" class="btn btn-light" title="{{ 'label_rent'|trans }}">{{ 'label_rent'|trans }}</a>
+        {% else %}
+            {{ 'label_not_available'|trans }}
         {% endif %}
         </div>
     </div>
+    {% endif %}
     {% else %}
         <p>
             {{ 'message_item_not_found'|trans }}

@@ -38,13 +38,25 @@
                 <source>message_tag_contains_tasks</source>
                 <target>Istnieją kasety z tym tagiem!</target>
             </trans-unit>
+            <trans-unit id="message_blocked_successfully">
+                <source>message_blocked_successfully</source>
+                <target>Pomyslnie zablokowano użytkownika</target>
+            </trans-unit>
+            <trans-unit id="message_unblocked_successfully">
+                <source>message_unblocked_successfully</source>
+                <target>Pomyslnie odblokowano użytkownika</target>
+            </trans-unit>
             <trans-unit id="label_created_at">
                 <source>label_created_at</source>
-                <target>Stworzona</target>
+                <target>Stworzono</target>
+            </trans-unit>
+            <trans-unit id="label_blocked">
+                <source>label_blocked</source>
+                <target>Zablokowany</target>
             </trans-unit>
             <trans-unit id="label_updated_at">
                 <source>label_updated_at</source>
-                <target>Zaktualizowana</target>
+                <target>Zaktualizowano</target>
             </trans-unit>
             <trans-unit id="action_back_to_list">
                 <source>action_back_to_list</source>
@@ -94,6 +106,10 @@
                 <source>title_tape_edit</source>
                 <target>Edytuj kasetę #%id%</target>
             </trans-unit>
+            <trans-unit id="title_account_edit">
+                <source>title_account_edit</source>
+                <target>Edytuj szczegóły konta</target>
+            </trans-unit>            
             <trans-unit id="title_reservation_edit">
                 <source>title_reservation_edit</source>
                 <target>Edytuj rezerwację #%id%</target>

@@ -27,6 +27,7 @@ class TapeFixtures extends AbstractBaseFixtures implements DependentFixtureInter
             $tape->setCreatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             $tape->setUpdatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             $tape->setCategory($this->getRandomReference('categories'));
+            $tape->addTag($this->getRandomReference('tags'));
             $tape->setAvailability($this->faker->boolean);
 
             return $tape;

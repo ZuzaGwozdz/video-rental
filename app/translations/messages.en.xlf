@@ -326,6 +326,18 @@
                 <source>title_user_block</source>
                 <target>Block/Unblock user #%id%</target>
             </trans-unit>
+            <trans-unit id="title_rating_list">
+                <source>title_rating_list</source>
+                <target>Rating list</target>
+            </trans-unit>
+            <trans-unit id="title_rating_view">
+                <source>title_rating_view</source>
+                <target>View rating #%id%</target>
+            </trans-unit>
+            <trans-unit id="title_rating_delete">
+                <source>title_rating_delete</source>
+                <target>Delete rating #%id%</target>
+            </trans-unit>
             <trans-unit id="label_note">
                 <source>label_note</source>
                 <target>Note</target>
