@@ -5,10 +5,16 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Gedmo\Mapping\Annotation as Gedmo;
+use DateTimeInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @Vich\Uploadable
  * @ORM\Entity(repositoryClass=ImageRepository::class)
+ * 
+ * @UniqueEntity(fields={"imageName"})
  */
 class Image
 {
@@ -29,7 +35,9 @@ class Image
     private $imageFile;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=true)
+     * 
+     * @Assert\Type(type="string")
      * 
      * @var string|null
      */
@@ -38,6 +46,8 @@ class Image
     /**
      * @ORM\Column(type="integer")
      * 
+     * @Assert\Type(type="integer")
+     * 
      * @var int|null
      */
     private $imageSize;
@@ -45,12 +55,17 @@ class Image
     /**
      * @ORM\Column(type="datetime")
      * 
+     * @Gedmo\Timestampable(on="update")
+     * 
+     * @Assert\Type("\DateTimeInterface")
+     * 
      * @var \DateTimeInterface|null
      */
     private $updatedAt;
 
     /**
      * @ORM\OneToOne(targetEntity=Tape::class, inversedBy="image", cascade={"persist", "remove"})
+     * @Assert\Type(type=Tape::class)
      */
     private $tape;
 
@@ -89,7 +104,7 @@ class Image
         return $this->imageName;
     }
 
-    public function setImageName(string $imageName): void
+    public function setImageName(?string $imageName): void
     {
         $this->imageName = $imageName;
     }
@@ -99,7 +114,7 @@ class Image
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize): void
+    public function setImageSize(?int $imageSize): void
     {
         $this->imageSize = $imageSize;
     }

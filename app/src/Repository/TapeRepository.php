@@ -70,7 +70,7 @@ class TapeRepository extends ServiceEntityRepository
     public function delete(Tape $tape): void
     {
         $this->_em->remove($tape);
-        $this->_em->flush($tape);
+        $this->_em->flush();
     }
 
 

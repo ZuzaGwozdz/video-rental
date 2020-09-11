@@ -34,6 +34,12 @@
                         {% endfor %}
                     {% endif %}
                 </dd>
+                {% if tape.image.imageName is defined %}
+                <dt>Image</dt>
+                <dd>
+                    <img src="{{ asset('images/tapes/' ~ tape.image.imageName) }}" title="tapeImage" alt="Tape {{ tape.id }} image"><br>
+                </dd>
+                {% endif %}
     {% if is_granted('ROLE_USER') and not is_granted('ROLE_ADMIN') %}
                 <dt>My Note</dt>
                     {% if rating %}
