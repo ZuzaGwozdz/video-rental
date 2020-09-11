@@ -130,6 +130,50 @@ class UserController extends AbstractController
     }
 
     /**
+     * Delete action.
+     *
+     * @param Request $request  HTTP request
+     * @param User $user User entity
+     *
+     * @return Response HTTP response
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
+     *
+     * @Route(
+     *     "/{id}/delete",
+     *     methods={"GET", "DELETE"},
+     *     requirements={"id": "[1-9]\d*"},
+     *     name="user_delete",
+     * )
+     *
+     */
+    public function delete(Request $request, User $user): Response
+    {
+        $form = $this->createForm(FormType::class, $user, ['method' => 'DELETE']);
+        $form->handleRequest($request);
+
+        if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
+            $form->submit($request->request->get($form->getName()));
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->userService->delete($user);
+            $this->addFlash('success', 'message_deleted_successfully');
+
+            return $this->redirectToRoute('user_index');
+        }
+
+        return $this->render(
+            'user/delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'user' => $user
+            ]
+        );
+    }
+
+    /**
      * Block action.
      *
      * @param Request $request  HTTP request

@@ -47,8 +47,7 @@ class Rating
      * 
      * @ORM\ManyToOne(
      *      targetEntity=User::class, 
-     *      fetch="EXTRA_LAZY", 
-     *      inversedBy="ratings"
+     *      fetch="EXTRA_LAZY",
      *      )
      * @ORM\JoinColumn(nullable=false)
      */
@@ -61,8 +60,7 @@ class Rating
      * 
      * @ORM\ManyToOne(
      *      targetEntity=Tape::class,
-     *      fetch="EXTRA_LAZY", 
-     *      inversedBy="ratings"
+     *      fetch="EXTRA_LAZY",
      *      )
      * @ORM\JoinColumn(nullable=false)
      */

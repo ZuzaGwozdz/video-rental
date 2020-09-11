@@ -96,4 +96,16 @@ class RatingService
     {
         return $this->ratingRepository->findOneById($id);
     }
+
+    /**
+     * Find ratings by.
+     *
+     * @param array $criteria Criteria
+     *
+     * @return \App\Entity\Rating[] Rating collection
+     */
+    public function findBy(array $criteria)
+    {
+        return $this->ratingRepository->findBy($criteria);
+    }
 }

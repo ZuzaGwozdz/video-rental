@@ -123,11 +123,6 @@ class User implements UserInterface
      */
     private $userData;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Rating::class, mappedBy="user", orphanRemoval=true)
-     */
-    private $ratings;
-
     public function __construct()
     {
         $this->ratings = new ArrayCollection();

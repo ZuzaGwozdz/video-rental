@@ -6,7 +6,9 @@
 namespace App\Service;
 
 use App\Entity\User;
-use App\Entity\UserData;
+use App\Service\TapeService;
+use App\Service\RatingService;
+use App\Service\Resevationservice;
 use App\Repository\UserRepository;
 use App\Repository\UserDataRepository;
 use Doctrine\ORM\OptimisticLockException;
@@ -40,6 +42,20 @@ class UserService
      */
     private $paginator;
 
+     /**
+     * Reservation service.
+     *
+     * @var ReservationService
+     */
+    private $reservationService;
+
+    /**
+     * Rating service.
+     *
+     * @var RatingService
+     */
+    private $ratingService;
+
     /**
      * UserService constructor.
      *
@@ -47,11 +63,18 @@ class UserService
      * @param UserDataRepository $userDataRepository UserData repository
      * @param PaginatorInterface $paginator          Paginator
      */
-    public function __construct(UserRepository $userRepository, UserDataRepository $userDataRepository, PaginatorInterface $paginator)
-    {
+    public function __construct(
+        UserRepository $userRepository, 
+        UserDataRepository $userDataRepository, 
+        PaginatorInterface $paginator,
+        ReservationService $reservationService,
+        RatingService $ratingService
+    ){
         $this->userDataRepository = $userDataRepository;
         $this->userRepository = $userRepository;
         $this->paginator = $paginator;
+        $this->reservationService = $reservationService;
+        $this->ratingService = $ratingService;
     }
 
     /**
@@ -94,6 +117,16 @@ class UserService
      */
     public function delete(User $user): void
     {
+        $userReservations = $this->reservationService->findBy([ 'author' => $user ]);
+        foreach ($userReservations as $userReservation)
+        {
+            $this->reservationService->delete($userReservation);
+        }
+        $userRatings = $this->ratingService->findBy([ 'author' => $user ]);
+        foreach ($userRatings as $userRating)
+        {
+            $this->ratingService->delete($userRating);
+        }
         $this->userDataRepository->delete($user->getUserData());
         $this->userRepository->delete($user);
     }

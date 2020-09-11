@@ -113,4 +113,16 @@ class ReservationService
     {
         return $this->reservationRepository->findOneById($id);
     }
+
+    /**
+     * Find reservations by.
+     *
+     * @param array $criteria Criteria
+     *
+     * @return \App\Entity\Reservation[] Reservation collection
+     */
+    public function findBy(array $criteria)
+    {
+        return $this->reservationRepository->findBy($criteria);
+    }
 }
