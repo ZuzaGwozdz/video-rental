@@ -8,7 +8,7 @@ services:
           - 80:80
         volumes:
           - /home/virtua/sites/studia/video-rental/.docker/config/vhosts:/etc/apache2/sites-enabled
-          - /home/virtua/sites/studia/video-rental/app:/home/wwwroot/sf
+          - /home/virtua/sites/studia/video-rental/doc:/home/wwwroot/doc
         depends_on:
           - php
 
@@ -30,7 +30,7 @@ services:
         build: .docker/php
         container_name: sf_php
         volumes:
-          - /home/virtua/sites/studia/video-rental/app:/home/wwwroot/sf
+          - /home/virtua/sites/studia/video-rental/doc:/home/wwwroot/doc
         environment:
           - maildev_host=sf_maildev
         depends_on:
