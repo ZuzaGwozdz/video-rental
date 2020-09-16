@@ -6,10 +6,10 @@
 namespace App\Form;
 
 use App\Entity\Rating;
+use blackknight467\StarRatingBundle\Form\RatingType as StarRatingType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use blackknight467\StarRatingBundle\Form\RatingType as StarRatingType;
 
 /**
  * Class RatingType.
@@ -23,14 +23,13 @@ class RatingType extends AbstractType
      * top most type. Type extensions can further modify the form.
      *
      * @param FormBuilderInterface $builder The form builder
-     * @param array $options The options
+     * @param array                $options The options
      *
      * @see FormTypeExtensionInterface::buildForm()
-     *
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('note', StarRatingType::class,['label' => 'My note']);
+        $builder->add('note', StarRatingType::class, ['label' => 'My note']);
     }
 
     /**
@@ -55,5 +54,4 @@ class RatingType extends AbstractType
     {
         return 'rating';
     }
-
 }

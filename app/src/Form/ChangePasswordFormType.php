@@ -15,15 +15,15 @@ class ChangePasswordFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('oldPlainPassword', \Symfony\Component\Form\Extension\Core\Type\PasswordType::class, array(
-                'constraints' => array(
+            ->add('oldPlainPassword', \Symfony\Component\Form\Extension\Core\Type\PasswordType::class, [
+                'constraints' => [
                 new \Symfony\Component\Security\Core\Validator\Constraints\UserPassword(),
-                ),
+                ],
                 'mapped' => false,
                 'required' => true,
                 'label' => 'Current Password',
-            ));
-            
+            ]);
+
         $builder
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,

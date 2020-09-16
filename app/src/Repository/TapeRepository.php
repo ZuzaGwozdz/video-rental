@@ -73,11 +73,9 @@ class TapeRepository extends ServiceEntityRepository
         $this->_em->flush();
     }
 
-
     /**
      * Query all records.
      *
-     * @param array $filters
      * @return QueryBuilder Query builder
      */
     public function queryAll(array $filters = []): QueryBuilder
@@ -101,7 +99,7 @@ class TapeRepository extends ServiceEntityRepository
      * Apply filters to paginated list.
      *
      * @param QueryBuilder $queryBuilder Query builder
-     * @param array                      $filters      Filters array
+     * @param array        $filters      Filters array
      *
      * @return QueryBuilder Query builder
      */

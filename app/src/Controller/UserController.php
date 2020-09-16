@@ -56,7 +56,6 @@ class UserController extends AbstractController
      *     name="user_index",
      * )
      */
-
     public function index(Request $request): Response
     {
         $page = $request->query->getInt('page', 1);
@@ -93,8 +92,8 @@ class UserController extends AbstractController
     /**
      * Edit action.
      *
-     * @param Request $request  HTTP request
-     * @param User $user User entity
+     * @param Request $request HTTP request
+     * @param User    $user    User entity
      *
      * @return Response HTTP response
      *
@@ -132,8 +131,8 @@ class UserController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request $request  HTTP request
-     * @param User $user User entity
+     * @param Request $request HTTP request
+     * @param User    $user    User entity
      *
      * @return Response HTTP response
      *
@@ -146,7 +145,6 @@ class UserController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      *     name="user_delete",
      * )
-     *
      */
     public function delete(Request $request, User $user): Response
     {
@@ -168,7 +166,7 @@ class UserController extends AbstractController
             'user/delete.html.twig',
             [
                 'form' => $form->createView(),
-                'user' => $user
+                'user' => $user,
             ]
         );
     }
@@ -176,8 +174,8 @@ class UserController extends AbstractController
     /**
      * Block action.
      *
-     * @param Request $request  HTTP request
-     * @param User $user User entity
+     * @param Request $request HTTP request
+     * @param User    $user    User entity
      *
      * @return Response HTTP response
      *
@@ -190,7 +188,6 @@ class UserController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      *     name="user_block",
      * )
-     *
      */
     public function block(Request $request, User $user): Response
     {
@@ -198,11 +195,10 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($user->getUserData()->getBlocked() == 0)
-            {
+            if (0 === $user->getUserData()->getBlocked()) {
                 $user->getUserData()->setBlocked(1);
                 $this->addFlash('success', 'message_blocked_successfully');
-            }else{
+            } else {
                 $user->getUserData()->setBlocked(0);
                 $this->addFlash('success', 'message_unblocked_successfully');
             }
@@ -215,7 +211,7 @@ class UserController extends AbstractController
             'user/block.html.twig',
             [
                 'form' => $form->createView(),
-                'user' => $user
+                'user' => $user,
             ]
         );
     }

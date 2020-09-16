@@ -382,6 +382,38 @@
                 <source>title_reservation_decline</source>
                 <target>Odrzuć rezerwację</target>
             </trans-unit>
+            <trans-unit id="label_email">
+                <source>label_email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="label_nick">
+                <source>label_nick</source>
+                <target>Nick</target>
+            </trans-unit>
+            <trans-unit id="label_rate">
+                <source>label_rate</source>
+                <target>Oceń</target>
+            </trans-unit>
+            <trans-unit id="label_rating">
+                <source>label_rating</source>
+                <target>Ocena</target>
+            </trans-unit>
+            <trans-unit id="title_rating_list">
+                <source>title_rating_list</source>
+                <target>Lista ocen</target>
+            </trans-unit>
+            <trans-unit id="title_rating_view">
+                <source>title_rating_view</source>
+                <target>Podgląd oceny #%id%</target>
+            </trans-unit>
+            <trans-unit id="label_note">
+                <source>label_note</source>
+                <target>Ocena</target>
+            </trans-unit>
+            <trans-unit id="label_id">
+                <source>label_id</source>
+                <target>Id</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

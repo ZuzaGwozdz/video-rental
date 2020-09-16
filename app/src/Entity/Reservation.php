@@ -41,7 +41,7 @@ class Reservation
      *     )
      *
      * @Assert\Type(type="string")
-     * 
+     *
      * @Assert\Length(
      *     min="3",
      *     max="200",
@@ -103,14 +103,14 @@ class Reservation
 
     /**
      * Status.
-     * 
-     * @var boolean
-     * 
+     *
+     * @var bool
+     *
      * @ORM\Column(
-     *      type="boolean", 
+     *      type="boolean",
      *      options={"default" : 0},
      *      )
-     * 
+     *
      * @Assert\Type(type="boolean")
      */
     private $status;
@@ -127,8 +127,6 @@ class Reservation
 
     /**
      * Getter for Email.
-     * 
-     * @return string|null
      */
     public function getEmail(): ?string
     {
@@ -137,8 +135,6 @@ class Reservation
 
     /**
      * Setter for Email.
-     *
-     * @param string $email
      */
     public function setEmail(string $email): void
     {
@@ -147,8 +143,6 @@ class Reservation
 
     /**
      * Getter for Comment.
-     *
-     * @return string|null
      */
     public function getComment(): ?string
     {
@@ -157,8 +151,6 @@ class Reservation
 
     /**
      * Setter for Comment.
-     *
-     * @param string|null $comment
      */
     public function setComment(?string $comment): void
     {
@@ -177,8 +169,6 @@ class Reservation
 
     /**
      * Setter for Created at.
-     *
-     * @param DateTimeInterface $createdAt
      */
     public function setCreatedAt(DateTimeInterface $createdAt): void
     {

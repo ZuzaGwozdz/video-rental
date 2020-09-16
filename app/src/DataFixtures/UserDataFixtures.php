@@ -6,7 +6,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\UserData;
-use App\DataFixtures\UserFixtures;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -27,7 +26,7 @@ class UserDataFixtures extends AbstractBaseFixtures implements DependentFixtureI
             $userData->setName($this->faker->firstName());
             $userData->setSurname($this->faker->lastName());
             $userData->setBirthday($this->faker->dateTimeBetween('-60 years', '-1 days'));
-            $userData->setUser($this->getReference(UserFixtures::USER . $i));
+            $userData->setUser($this->getReference(UserFixtures::USER.$i));
             $userData->setBlocked($this->faker->boolean);
 
             return $userData;
@@ -38,7 +37,7 @@ class UserDataFixtures extends AbstractBaseFixtures implements DependentFixtureI
             $userData->setName($this->faker->firstName());
             $userData->setSurname($this->faker->lastName());
             $userData->setBirthday($this->faker->dateTimeBetween('-60 years', '-1 days'));
-            $userData->setUser($this->getReference(UserFixtures::ADMIN . $i));
+            $userData->setUser($this->getReference(UserFixtures::ADMIN.$i));
             $userData->setBlocked($this->faker->boolean);
 
             return $userData;

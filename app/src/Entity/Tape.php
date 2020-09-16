@@ -111,23 +111,28 @@ class Tape
     /**
      * Availability.
      *
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
-     * 
+     *
      * @Assert\Type(type="boolean")
      */
     private $availability;
 
     /**
+     * @ORM\OneToMany(
+     *      targetEntity=Rating::class,
+     *      mappedBy="tape",
+     *      fetch="EXTRA_LAZY",
+     *      orphanRemoval=true
+     *      )
+     */
+    private $ratings;
+
+    /**
      * @ORM\OneToOne(targetEntity=Image::class, mappedBy="tape", cascade={"persist", "remove"})
      */
     private $image;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Rating::class, mappedBy="tape", orphanRemoval=true)
-     */
-    private $ratings;
 
     /**
      * Tape constructor.
@@ -149,7 +154,7 @@ class Tape
     }
 
     /**
-     * Getter for Rating
+     * Getter for Rating.
      *
      * @return int|null Result
      */
@@ -159,7 +164,7 @@ class Tape
 
         $count = count($this->getRatings());
 
-        foreach ($this->getRatings() as $rating){
+        foreach ($this->getRatings() as $rating) {
             $total = $total + $rating->getNote();
         }
 
@@ -294,28 +299,10 @@ class Tape
 
     /**
      * Setter for Availability.
-     *
-     * @param bool $availability
      */
     public function setAvailability(bool $availability): void
     {
         $this->availability = $availability;
-    }
-
-    public function getImage(): ?Image
-    {
-        return $this->image;
-    }
-
-    public function setImage(?Image $image): void
-    {
-        $this->image = $image;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newTape = null === $image ? null : $this;
-        if ($image->getTape() !== $newTape) {
-            $image->setTape($newTape);
-        }
     }
 
     /**
@@ -344,6 +331,24 @@ class Tape
             if ($rating->getTape() === $this) {
                 $rating->setTape(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(?Image $image): self
+    {
+        $this->image = $image;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newTape = null === $image ? null : $this;
+        if ($image->getTape() !== $newTape) {
+            $image->setTape($newTape);
         }
 
         return $this;

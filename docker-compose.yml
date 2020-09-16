@@ -41,4 +41,4 @@ services:
         image: djfarrelly/maildev
         container_name: sf_maildev
         ports:
-          - 8001:8000
+          - 8001:8001

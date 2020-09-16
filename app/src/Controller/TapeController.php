@@ -7,8 +7,8 @@ namespace App\Controller;
 
 use App\Entity\Tape;
 use App\Form\TapeType;
+use App\Service\RatingService;
 use App\Service\TapeService;
-use App\Repository\RatingRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -33,15 +33,24 @@ class TapeController extends AbstractController
     private $tapeService;
 
     /**
+     * Rating service.
+     *
+     * @var RatingService
+     */
+    private $ratingService;
+
+    /**
      * TapeController constructor.
      *
-     * @param TapeService $tapeService Tape service
+     * @param TapeService   $tapeService   Tape service
+     * @param RatingService $ratingService Rating service
      */
-    public function __construct(TapeService $tapeService)
+    public function __construct(TapeService $tapeService, RatingService $ratingService)
     {
         $this->tapeService = $tapeService;
+        $this->ratingService = $ratingService;
     }
-    
+
     /**
      * Index action.
      *
@@ -55,7 +64,6 @@ class TapeController extends AbstractController
      *     name="tape_index",
      * )
      */
-
     public function index(Request $request): Response
     {
         $pagination = $this->tapeService->createPaginatedList(
@@ -63,7 +71,7 @@ class TapeController extends AbstractController
             $request->query->getAlnum('filters', [])
         );
 
-        return $this-> render(
+        return $this->render(
             'tape/index.html.twig',
             ['pagination' => $pagination]
         );
@@ -83,16 +91,15 @@ class TapeController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      *     )
      */
-
-    public function show(Tape $tape, RatingRepository $ratingRepository): Response
+    public function show(Tape $tape): Response
     {
-        $rating = $ratingRepository->findOneBy(['author'=>$this->getUser(), 'tape'=>$tape]);
+        $rating = $this->ratingService->findOneBy(['author' => $this->getUser(), 'tape' => $tape]);
 
-        return $this -> render(
+        return $this->render(
             'tape/show.html.twig',
             [
                 'tape' => $tape,
-                'rating' => $rating
+                'rating' => $rating,
             ]
         );
     }
@@ -100,7 +107,7 @@ class TapeController extends AbstractController
     /**
      * Create action.
      *
-     * @param Request $request        HTTP request
+     * @param Request $request HTTP request
      *
      * @return Response HTTP response
      *
@@ -138,8 +145,8 @@ class TapeController extends AbstractController
     /**
      * Edit action.
      *
-     * @param Request $request        HTTP request
-     * @param Tape                         $tape          Tape entity
+     * @param Request $request HTTP request
+     * @param Tape    $tape    Tape entity
      *
      * @return Response HTTP response
      *
@@ -179,8 +186,8 @@ class TapeController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request $request        HTTP request
-     * @param Tape                          $tape           Tape entity
+     * @param Request $request HTTP request
+     * @param Tape    $tape    Tape entity
      *
      * @return Response HTTP response
      *

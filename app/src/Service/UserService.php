@@ -6,11 +6,8 @@
 namespace App\Service;
 
 use App\Entity\User;
-use App\Service\TapeService;
-use App\Service\RatingService;
-use App\Service\Resevationservice;
-use App\Repository\UserRepository;
 use App\Repository\UserDataRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -42,7 +39,7 @@ class UserService
      */
     private $paginator;
 
-     /**
+    /**
      * Reservation service.
      *
      * @var ReservationService
@@ -59,17 +56,17 @@ class UserService
     /**
      * UserService constructor.
      *
-     * @param UserRepository $userRepository User repository
+     * @param UserRepository     $userRepository     User repository
      * @param UserDataRepository $userDataRepository UserData repository
      * @param PaginatorInterface $paginator          Paginator
      */
     public function __construct(
-        UserRepository $userRepository, 
-        UserDataRepository $userDataRepository, 
+        UserRepository $userRepository,
+        UserDataRepository $userDataRepository,
         PaginatorInterface $paginator,
         ReservationService $reservationService,
         RatingService $ratingService
-    ){
+    ) {
         $this->userDataRepository = $userDataRepository;
         $this->userRepository = $userRepository;
         $this->paginator = $paginator;
@@ -117,14 +114,12 @@ class UserService
      */
     public function delete(User $user): void
     {
-        $userReservations = $this->reservationService->findBy([ 'author' => $user ]);
-        foreach ($userReservations as $userReservation)
-        {
+        $userReservations = $this->reservationService->findBy(['author' => $user]);
+        foreach ($userReservations as $userReservation) {
             $this->reservationService->delete($userReservation);
         }
-        $userRatings = $this->ratingService->findBy([ 'author' => $user ]);
-        foreach ($userRatings as $userRating)
-        {
+        $userRatings = $this->ratingService->findBy(['author' => $user]);
+        foreach ($userRatings as $userRating) {
             $this->ratingService->delete($userRating);
         }
         $this->userDataRepository->delete($user->getUserData());

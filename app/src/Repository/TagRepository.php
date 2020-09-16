@@ -2,6 +2,7 @@
 /**
  * Tag repository.
  */
+
 namespace App\Repository;
 
 use App\Entity\Tag;
@@ -34,6 +35,7 @@ class TagRepository extends ServiceEntityRepository
 
     /**
      * TagRepository constructor.
+     *
      * @param ManagerRegistry $registry Manager registry
      */
     public function __construct(ManagerRegistry $registry)

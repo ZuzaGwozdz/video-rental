@@ -1,24 +1,39 @@
 <?php
+/**
+ * Image.
+ */
 
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Gedmo\Mapping\Annotation as Gedmo;
-use DateTimeInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @Vich\Uploadable
- * @ORM\Entity(repositoryClass=ImageRepository::class)
- * 
- * @UniqueEntity(fields={"imageName"})
+ * Class Image.
+ *
+ * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
+ * @ORM\Table(
+ *     name="images",
+ *     uniqueConstraints={
+ *          @ORM\UniqueConstraint(
+ *              name="UQ_filename_1",
+ *              columns={"filename"},
+ *          ),
+ *     },
+ * )
+ *
+ * @UniqueEntity(
+ *      fields={"filename"},
+ * )
  */
 class Image
 {
     /**
+     * Id.
+     *
+     * @var int
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -26,116 +41,81 @@ class Image
     private $id;
 
     /**
-     * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     * 
-     * @Vich\UploadableField(mapping="tape_image", fileNameProperty="imageName", size="imageSize")
-     * 
-     * @var File|null
-     */
-    private $imageFile;
-
-    /**
-     * @ORM\Column(type="string", length=64, nullable=true)
-     * 
-     * @Assert\Type(type="string")
-     * 
-     * @var string|null
-     */
-    private $imageName;
-
-    /**
-     * @ORM\Column(type="integer")
-     * 
-     * @Assert\Type(type="integer")
-     * 
-     * @var int|null
-     */
-    private $imageSize;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * 
-     * @Gedmo\Timestampable(on="update")
-     * 
-     * @Assert\Type("\DateTimeInterface")
-     * 
-     * @var \DateTimeInterface|null
-     */
-    private $updatedAt;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Tape::class, inversedBy="image", cascade={"persist", "remove"})
-     * @Assert\Type(type=Tape::class)
+     * Tape.
+     *
+     * @var \App\Entity\Tape
+     *
+     * @ORM\OneToOne(
+     *     targetEntity="App\Entity\Tape",
+     *     inversedBy="image",
+     * )
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @Assert\Type(type="App\Entity\Tape")
      */
     private $tape;
 
+    /**
+     * Filename.
+     *
+     * @var string
+     *
+     * @ORM\Column(
+     *     type="string",
+     *     length=191,
+     * )
+     *
+     * @Assert\Type(type="string")
+     */
+    private $filename;
+
+    /**
+     * Getter for id.
+     *
+     * @return int|null Id
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
-     * of 'UploadedFile' is injected into this setter to trigger the update. If this
-     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
-     * must be able to accept an instance of 'File' as the bundle will inject one here
-     * during Doctrine hydration.
+     * Getter for tape.
      *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     * @return \App\Entity\Tape|null Tape
      */
-    public function setImageFile(?File $imageFile = null): void
-    {
-        $this->imageFile = $imageFile;
-
-        if (null !== $imageFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTimeImmutable();
-        }
-    }
-
-    public function getImageFile(): ?File
-    {
-        return $this->imageFile;
-    }
-
-    public function getImageName(): ?string
-    {
-        return $this->imageName;
-    }
-
-    public function setImageName(?string $imageName): void
-    {
-        $this->imageName = $imageName;
-    }
-
-    public function getImageSize(): ?int
-    {
-        return $this->imageSize;
-    }
-
-    public function setImageSize(?int $imageSize): void
-    {
-        $this->imageSize = $imageSize;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
     public function getTape(): ?Tape
     {
         return $this->tape;
     }
 
-    public function setTape(?Tape $tape): void
+    /**
+     * Setter for tape.
+     *
+     * @param \App\Entity\Tape $tape Tape
+     */
+    public function setTape(Tape $tape): void
     {
         $this->tape = $tape;
+    }
+
+    /**
+     * Getter for filename.
+     *
+     * @return string Filename
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * Setter for filename.
+     *
+     * @param string $filename Filename
+     */
+    public function setFilename(string $filename): void
+    {
+        $this->filename = $filename;
     }
 }

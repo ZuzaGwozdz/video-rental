@@ -2,6 +2,7 @@
 /**
  * Tag entity.
  */
+
 namespace App\Entity;
 
 use DateTimeInterface;
@@ -100,7 +101,7 @@ class Tag
 
     /**
      * Tapes.
-     * 
+     *
      * @var ArrayCollection|Tape[] Tapes
      *
      * @ORM\ManyToMany(
@@ -221,8 +222,6 @@ class Tag
 
     /**
      * Add tape to collection.
-     *
-     * @param Tape $tape
      */
     public function addTape(Tape $tape): void
     {

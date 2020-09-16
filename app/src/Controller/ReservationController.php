@@ -8,13 +8,10 @@ namespace App\Controller;
 use App\Entity\Reservation;
 use App\Entity\Tape;
 use App\Form\ReservationType;
-use App\Service\TapeService;
 use App\Service\ReservationService;
-use App\Repository\ReservationRepository;
-use App\Repository\TapeRepository;
+use App\Service\TapeService;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -23,10 +20,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class ReservationController
+ * Class ReservationController.
  *
  * @Route("/reservation")
- * 
+ *
  * @IsGranted("ROLE_USER")
  */
 class ReservationController extends AbstractController
@@ -49,7 +46,7 @@ class ReservationController extends AbstractController
      * ReservationController constructor.
      *
      * @param ReservationService $reservationService Reservation service
-     * @param TapeService $tapeService Tape service
+     * @param TapeService        $tapeService        Tape service
      */
     public function __construct(ReservationService $reservationService, TapeService $tapeService)
     {
@@ -61,8 +58,6 @@ class ReservationController extends AbstractController
      * Index action.
      *
      * @param Request $request HTTP request
-     * @param ReservationRepository $reservationRepository Reservation repository
-     * @param PaginatorInterface $paginator Paginator
      *
      * @return Response HTTP response
      *
@@ -72,21 +67,17 @@ class ReservationController extends AbstractController
      *     name="reservation_index",
      * )
      */
-
-    public function index(Request $request, ReservationRepository $reservationRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
-        if ($this->isGranted('ROLE_ADMIN'))
-        {
+        if ($this->isGranted('ROLE_ADMIN')) {
             $page = $request->query->getInt('page', 1);
             $pagination = $this->reservationService->createPaginatedList($page);
-        }
-        else
-        {
+        } else {
             $page = $request->query->getInt('page', 1);
             $pagination = $this->reservationService->createPaginatedListByAuthor($page, $this->getuser());
         }
 
-        return $this-> render(
+        return $this->render(
             'reservation/index.html.twig',
             ['pagination' => $pagination]
         );
@@ -106,10 +97,9 @@ class ReservationController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      *     )
      */
-
     public function show(Reservation $reservation): Response
     {
-        return $this -> render(
+        return $this->render(
             'reservation/show.html.twig',
             ['reservation' => $reservation]
         );
@@ -119,12 +109,13 @@ class ReservationController extends AbstractController
      * Create action.
      *
      * @param Request $request HTTP request
-     * @param Tape $tape Tape entity
+     * @param Tape    $tape    Tape entity
      *
      * @return Response HTTP response
      *
      * @throws ORMException
      * @throws OptimisticLockException
+     *
      * @Route(
      *     "/{id}/create",
      *     methods={"GET", "POST"},
@@ -163,9 +154,8 @@ class ReservationController extends AbstractController
     /**
      * Edit action.
      *
-     * @param Request $request HTTP request
+     * @param Request     $request     HTTP request
      * @param Reservation $reservation Reservation entity
-     * @param ReservationRepository $reservationRepository Reservation repository
      *
      * @return Response HTTP response
      *
@@ -179,12 +169,12 @@ class ReservationController extends AbstractController
      *     name="reservation_edit",
      *     )
      */
-
     public function edit(Request $request, Reservation $reservation): Response
     {
         if ($reservation->getAuthor() !== $this->getUser()) {
-           $this->addFlash('warning', 'message.item_not_found');
-           return $this->redirectToRoute('reservation_index');
+            $this->addFlash('warning', 'message.item_not_found');
+
+            return $this->redirectToRoute('reservation_index');
         }
 
         $form = $this->createForm(ReservationType::class, $reservation, ['method' => 'PUT']);
@@ -209,10 +199,8 @@ class ReservationController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request $request HTTP request
+     * @param Request     $request     HTTP request
      * @param Reservation $reservation Reservation entity
-     * @param ReservationRepository $reservationRepository Reservation repository
-     * @param TapeRepository $tapeRepository Tape repository
      *
      * @return Response HTTP response
      *
@@ -230,6 +218,7 @@ class ReservationController extends AbstractController
     {
         if ($reservation->getAuthor() !== $this->getUser()) {
             $this->addFlash('warning', 'message_item_not_found');
+
             return $this->redirectToRoute('reservation_index');
         }
 
@@ -263,9 +252,8 @@ class ReservationController extends AbstractController
     /**
      * Confirm action.
      *
-     * @param Request $request HTTP request
+     * @param Request     $request     HTTP request
      * @param Reservation $reservation Reservation entity
-     * @param ReservationRepository $reservationRepository Reservation repository
      *
      * @return Response HTTP response
      *
@@ -281,7 +269,7 @@ class ReservationController extends AbstractController
      *
      * @IsGranted("ROLE_ADMIN")
      */
-    public function confirm(Request $request, Reservation $reservation, ReservationRepository $reservationRepository, TapeRepository $tapeRepository): Response
+    public function confirm(Request $request, Reservation $reservation): Response
     {
         $form = $this->createForm(FormType::class, $reservation, ['method' => 'PUT']);
         $form->handleRequest($request);

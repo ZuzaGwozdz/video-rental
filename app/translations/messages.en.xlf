@@ -366,6 +366,22 @@
                 <source>reset_email_text</source>
                 <target>Enter your email address and we we will send you a link to reset your password.</target>
             </trans-unit>
+            <trans-unit id="label_blocked">
+                <source>label_blocked</source>
+                <target>Blocked</target>
+            </trans-unit>
+            <trans-unit id="action_sign_in">
+                <source>action_sign_in</source>
+                <target>Please sign in</target>
+            </trans-unit>
+            <trans-unit id="label_password">
+                <source>label_password</source>
+                <target>Password</target>
+            </trans-unit>
+            <trans-unit id="app_login">
+                <source>app_login</source>
+                <target>Log in</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

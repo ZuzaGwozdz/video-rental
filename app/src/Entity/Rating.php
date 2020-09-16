@@ -5,14 +5,14 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use DateTimeInterface;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Rating.
- * 
+ *
  * @ORM\Entity(repositoryClass="App\Repository\RatingRepository")
  * @ORM\Table(name="ratings")
  */
@@ -22,7 +22,7 @@ class Rating
      * Primary key.
      *
      * @var int
-     * 
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -31,11 +31,11 @@ class Rating
 
     /**
      * Note.
-     * 
+     *
      * @var int
-     * 
+     *
      * @ORM\Column(type="integer")
-     * 
+     *
      *  @Assert\Type(type="integer")
      */
     private $note;
@@ -44,9 +44,9 @@ class Rating
      * Author.
      *
      * @var User
-     * 
+     *
      * @ORM\ManyToOne(
-     *      targetEntity=User::class, 
+     *      targetEntity=User::class,
      *      fetch="EXTRA_LAZY",
      *      )
      * @ORM\JoinColumn(nullable=false)
@@ -57,7 +57,7 @@ class Rating
      * Tape.
      *
      * @var Tape
-     * 
+     *
      * @ORM\ManyToOne(
      *      targetEntity=Tape::class,
      *      fetch="EXTRA_LAZY",
@@ -154,8 +154,6 @@ class Rating
 
     /**
      * Setter for Created at.
-     *
-     * @param DateTimeInterface $createdAt
      */
     public function setCreatedAt(DateTimeInterface $createdAt): void
     {

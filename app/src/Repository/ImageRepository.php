@@ -19,4 +19,31 @@ class ImageRepository extends ServiceEntityRepository
         parent::__construct($registry, Image::class);
     }
 
+    /**
+     * Save record.
+     *
+     * @param Image $image Image entity
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function save(Image $image): void
+    {
+        $this->_em->persist($image);
+        $this->_em->flush($image);
+    }
+
+    /**
+     * Delete record.
+     *
+     * @param Image $image Image entity
+     *
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function delete(Image $image): void
+    {
+        $this->_em->remove($image);
+        $this->_em->flush($image);
+    }
 }

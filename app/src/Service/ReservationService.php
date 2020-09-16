@@ -36,7 +36,7 @@ class ReservationService
      * ReservationService constructor.
      *
      * @param ReservationRepository $reservationRepository Reservation repository
-     * @param PaginatorInterface $paginator          Paginator
+     * @param PaginatorInterface    $paginator             Paginator
      */
     public function __construct(ReservationRepository $reservationRepository, PaginatorInterface $paginator)
     {

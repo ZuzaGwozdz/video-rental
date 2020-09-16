@@ -62,9 +62,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     /**
      * LoginFormAuthenticator constructor.
      *
-     * @param UserRepository $userRepository   User repository
-     * @param UrlGeneratorInterface $urlGenerator     URL generator
-     * @param CsrfTokenManagerInterface $csrfTokenManager CSRF token manager
+     * @param UserRepository               $userRepository   User repository
+     * @param UrlGeneratorInterface        $urlGenerator     URL generator
+     * @param CsrfTokenManagerInterface    $csrfTokenManager CSRF token manager
      * @param UserPasswordEncoderInterface $passwordEncoder  Password encoder
      */
     public function __construct(UserRepository $userRepository, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
@@ -117,7 +117,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     /**
      * Get user.
      *
-     * @param mixed                                                       $credentials  Credentials
+     * @param mixed                 $credentials  Credentials
      * @param UserProviderInterface $userProvider User provider
      *
      * @return User|null Result
@@ -142,7 +142,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     /**
      * Checks credentials.
      *
-     * @param mixed                                               $credentials Credentials
+     * @param mixed         $credentials Credentials
      * @param UserInterface $user        User
      *
      * @return bool Result
@@ -167,9 +167,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     /**
      * Called when authentication executed and was successful!
      *
-     * @param Request $request     HTTP request
+     * @param Request        $request     HTTP request
      * @param TokenInterface $token       Authentication token
-     * @param string                                                               $providerKey The key of the firewall
+     * @param string         $providerKey The key of the firewall
      *
      * @return RedirectResponse Redirect response
      *

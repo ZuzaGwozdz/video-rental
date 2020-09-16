@@ -23,10 +23,10 @@ class RatingFixtures extends AbstractBaseFixtures implements DependentFixtureInt
     {
         $this->createMany(10, 'ratings', function ($i) {
             $rating = new Rating();
-            $rating->setNote($this->faker->numberBetween(0,5));
+            $rating->setNote($this->faker->numberBetween(0, 5));
             $rating->setCreatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             $rating->setUpdatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
-            $rating->setAuthor($this->getReference(UserFixtures::USER . $i));
+            $rating->setAuthor($this->getReference(UserFixtures::USER.$i));
             $rating->setTape($this->getRandomReference('tapes'));
 
             return $rating;

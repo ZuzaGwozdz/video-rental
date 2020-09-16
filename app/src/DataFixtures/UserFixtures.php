@@ -53,7 +53,7 @@ class UserFixtures extends AbstractBaseFixtures
                     'user1234'
                 )
             );
-            $this->setReference(self::USER . $i, $user);
+            $this->setReference(self::USER.$i, $user);
 
             return $user;
         });
@@ -69,7 +69,7 @@ class UserFixtures extends AbstractBaseFixtures
                     'admin1234'
                 )
             );
-            $this->setReference(self::ADMIN . $i, $user);
+            $this->setReference(self::ADMIN.$i, $user);
 
             return $user;
         });

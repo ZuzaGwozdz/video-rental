@@ -3,6 +3,7 @@
 /**
  * Tag Controller.
  */
+
 namespace App\Controller;
 
 use App\Entity\Tag;
@@ -42,7 +43,7 @@ class TagController extends AbstractController
     {
         $this->tagService = $tagService;
     }
-    
+
     /**
      * Index action.
      *
@@ -56,7 +57,6 @@ class TagController extends AbstractController
      *     name="tag_index",
      * )
      */
-
     public function index(Request $request): Response
     {
         $page = $request->query->getInt('page', 1);
@@ -105,7 +105,6 @@ class TagController extends AbstractController
      *     methods={"GET", "POST"},
      *     name="tag_create",
      * )
-     *
      */
     public function create(Request $request): Response
     {
@@ -129,8 +128,8 @@ class TagController extends AbstractController
     /**
      * Edit action.
      *
-     * @param Request $request  HTTP request
-     * @param Tag $tag Tag entity
+     * @param Request $request HTTP request
+     * @param Tag     $tag     Tag entity
      *
      * @return Response HTTP response
      *
@@ -168,8 +167,8 @@ class TagController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request $request  HTTP request
-     * @param Tag $tag Tag entity
+     * @param Request $request HTTP request
+     * @param Tag     $tag     Tag entity
      *
      * @return Response HTTP response
      *
@@ -182,7 +181,6 @@ class TagController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      *     name="tag_delete",
      * )
-     *
      */
     public function delete(Request $request, Tag $tag): Response
     {

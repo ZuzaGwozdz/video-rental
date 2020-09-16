@@ -34,8 +34,8 @@ class RatingService
     /**
      * RatingService constructor.
      *
-     * @param RatingRepository $ratingRepository Rating repository
-     * @param PaginatorInterface $paginator          Paginator
+     * @param RatingRepository   $ratingRepository Rating repository
+     * @param PaginatorInterface $paginator        Paginator
      */
     public function __construct(RatingRepository $ratingRepository, PaginatorInterface $paginator)
     {
@@ -95,6 +95,18 @@ class RatingService
     public function findOneById(int $id): ?Rating
     {
         return $this->ratingRepository->findOneById($id);
+    }
+
+    /**
+     * Find ratings by.
+     *
+     * @param array $criteria Criteria
+     *
+     * @return \App\Entity\Rating[] Rating collection
+     */
+    public function findOneBy(array $criteria)
+    {
+        return $this->ratingRepository->findBy($criteria);
     }
 
     /**

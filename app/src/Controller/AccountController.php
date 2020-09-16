@@ -3,8 +3,10 @@
 /**
  * Account Controller.
  */
+
 namespace App\Controller;
 
+use App\Form\ChangePasswordFormType;
 use App\Form\UserType;
 use App\Service\UserService;
 use Doctrine\ORM\OptimisticLockException;
@@ -14,9 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use App\Form\ChangePasswordFormType;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * Class AccountController.
@@ -36,7 +37,7 @@ class AccountController extends AbstractController
 
     /**
      * Security helper.
-     * 
+     *
      * @var Security
      */
     private $security;
@@ -44,19 +45,17 @@ class AccountController extends AbstractController
     /**
      * AccountController constructor.
      *
-     * @param Security $security Security helper
+     * @param Security    $security    Security helper
      * @param UserService $userService User service
      */
     public function __construct(Security $security, UserService $userService)
     {
-       $this->security = $security;
-       $this->userService = $userService;
+        $this->security = $security;
+        $this->userService = $userService;
     }
 
     /**
      * Index action.
-     *
-     * @param Request $request HTTP request
      *
      * @return Response HTTP response
      *
@@ -66,7 +65,6 @@ class AccountController extends AbstractController
      *     name="account_index",
      * )
      */
-
     public function index(): Response
     {
         $user = $this->security->getUser();
@@ -80,7 +78,7 @@ class AccountController extends AbstractController
     /**
      * Edit action.
      *
-     * @param Request $request  HTTP request
+     * @param Request $request HTTP request
      *
      * @return Response HTTP response
      *
@@ -116,10 +114,10 @@ class AccountController extends AbstractController
         );
     }
 
-     /**
+    /**
      * Reset password action.
      *
-     * @param Request $request  HTTP request
+     * @param Request $request HTTP request
      *
      * @return Response HTTP response
      *
@@ -140,7 +138,6 @@ class AccountController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-    
             // Encode the plain password, and set it.
             $encodedPassword = $passwordEncoder->encodePassword(
                 $user,
@@ -159,5 +156,4 @@ class AccountController extends AbstractController
 
         $this->addFlash('success', 'password_changed_successfully');
     }
-
 }

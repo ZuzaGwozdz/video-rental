@@ -26,7 +26,7 @@ class UserType extends AbstractType
      * @see FormTypeExtensionInterface::buildForm()
      *
      * @param FormBuilderInterface $builder The form builder
-     * @param array $options The options
+     * @param array                $options The options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -50,10 +50,10 @@ class UserType extends AbstractType
         );
 
         $builder->add(
-            'userData', 
+            'userData',
             UserDataType::class,
             [
-                'label' => 'label_user_data'
+                'label' => 'label_user_data',
             ]
         );
     }

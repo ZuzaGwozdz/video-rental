@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Category.
- * 
+ *
  * @ORM\Table(name="categories")
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  *
@@ -82,14 +82,13 @@ class Category
     /**
      * Tapes.
      *
-     * @var ArrayCollection|Tape[] $tapes Tapes
+     * @var ArrayCollection|Tape[] Tapes
      *
      * @ORM\OneToMany(
      *     targetEntity="App\Entity\Tape",
      *     mappedBy="category",
      *     fetch="EXTRA_LAZY",
      * )
-     *
      */
     private $tapes;
 
@@ -238,7 +237,7 @@ class Category
     }
 
     /**
-     * Setter for code
+     * Setter for code.
      *
      * @param string $code Code
      */

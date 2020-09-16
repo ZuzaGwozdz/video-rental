@@ -3,9 +3,11 @@
 /**
  * Rating Controller.
  */
+
 namespace App\Controller;
 
 use App\Entity\Rating;
+use App\Entity\Tape;
 use App\Form\RatingType;
 use App\Service\RatingService;
 use Doctrine\ORM\OptimisticLockException;
@@ -16,7 +18,6 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Tape;
 
 /**
  * Class RatingController.
@@ -43,7 +44,7 @@ class RatingController extends AbstractController
     {
         $this->ratingService = $ratingService;
     }
-    
+
     /**
      * Index action.
      *
@@ -56,10 +57,9 @@ class RatingController extends AbstractController
      *     methods={"GET"},
      *     name="rating_index",
      * )
-     * 
+     *
      * @IsGranted("ROLE_ADMIN")
      */
-
     public function index(Request $request): Response
     {
         $page = $request->query->getInt('page', 1);
@@ -96,8 +96,8 @@ class RatingController extends AbstractController
     /**
      * Create action.
      *
+     * @param Tape    $tape    Tape entity
      * @param Request $request HTTP request
-     *  @param Tape $tape Tape entity
      *
      * @return Response HTTP response
      *
@@ -110,7 +110,6 @@ class RatingController extends AbstractController
      *     name="rating_create",
      *     requirements={"id": "[1-9]\d*"},
      *     )
-     *
      */
     public function create(Tape $tape, Request $request): Response
     {
@@ -124,14 +123,14 @@ class RatingController extends AbstractController
             $this->ratingService->save($rating);
             $this->addFlash('success', 'message_created_successfully');
 
-            return $this->redirectToRoute('tape_show', ['id'=> $tape->getId()]);
+            return $this->redirectToRoute('tape_show', ['id' => $tape->getId()]);
         }
 
         return $this->render(
             'rating/create.html.twig',
             [
                 'form' => $form->createView(),
-                'tape' => $tape
+                'tape' => $tape,
             ]
         );
     }
@@ -139,8 +138,8 @@ class RatingController extends AbstractController
     /**
      * Edit action.
      *
-     * @param Request $request  HTTP request
-     * @param Rating $rating Rating entity
+     * @param Request $request HTTP request
+     * @param Rating  $rating  Rating entity
      *
      * @return Response HTTP response
      *
@@ -164,7 +163,7 @@ class RatingController extends AbstractController
             $this->ratingService->save($rating);
             $this->addFlash('success', 'message_updated_successfully');
 
-            return $this->redirectToRoute('tape_show', ['id'=> $tape->getId()]);
+            return $this->redirectToRoute('tape_show', ['id' => $tape->getId()]);
         }
 
         return $this->render(
@@ -180,8 +179,8 @@ class RatingController extends AbstractController
     /**
      * Delete action.
      *
-     * @param Request $request  HTTP request
-     * @param Rating $rating Rating entity
+     * @param Request $request HTTP request
+     * @param Rating  $rating  Rating entity
      *
      * @return Response HTTP response
      *

@@ -2,6 +2,7 @@
 /**
  * User repository.
  */
+
 namespace App\Repository;
 
 use App\Entity\User;
@@ -34,6 +35,7 @@ class UserRepository extends ServiceEntityRepository
 
     /**
      * UserRepository constructor.
+     *
      * @param ManagerRegistry $registry Manager registry
      */
     public function __construct(ManagerRegistry $registry)

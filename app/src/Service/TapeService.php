@@ -48,10 +48,10 @@ class TapeService
     /**
      * TaskService constructor.
      *
-     * @param TapeRepository $tapeRepository  Task repository
+     * @param TapeRepository     $tapeRepository  Task repository
      * @param PaginatorInterface $paginator       Paginator
-     * @param CategoryService $categoryService Category service
-     * @param TagService $tagService      Tag service
+     * @param CategoryService    $categoryService Category service
+     * @param TagService         $tagService      Tag service
      */
     public function __construct(TapeRepository $tapeRepository, PaginatorInterface $paginator, CategoryService $categoryService, TagService $tagService)
     {
@@ -64,7 +64,7 @@ class TapeService
     /**
      * Create paginated list.
      *
-     * @param int $page Page number
+     * @param int   $page    Page number
      * @param array $filters Filters array
      *
      * @return PaginationInterface Paginated list

@@ -2,6 +2,7 @@
 /**
  * Reservation Repository.
  */
+
 namespace App\Repository;
 
 use App\Entity\Reservation;
@@ -35,6 +36,7 @@ class ReservationRepository extends ServiceEntityRepository
 
     /**
      * ReservationRepository constructor.
+     *
      * @param ManagerRegistry $registry Manager registry
      */
     public function __construct(ManagerRegistry $registry)

@@ -2,6 +2,7 @@
 /**
  * User Data entity.
  */
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -15,9 +16,9 @@ class UserData
 {
     /**
      * Primary key.
-     * 
+     *
      * @var int
-     * 
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -26,11 +27,11 @@ class UserData
 
     /**
      * Name.
-     * 
+     *
      * @var string
-     * 
+     *
      * @ORM\Column(type="string", length=255)
-     * 
+     *
      * @Assert\Type(type="string")
      * @Assert\NotBlank
      * @Assert\Length(
@@ -42,11 +43,11 @@ class UserData
 
     /**
      * Surname.
-     * 
+     *
      * @var string
-     * 
+     *
      * @ORM\Column(type="string", length=255)
-     * 
+     *
      * @Assert\Type(type="string")
      * @Assert\NotBlank
      * @Assert\Length(
@@ -58,18 +59,20 @@ class UserData
 
     /**
      * Birthday.
-     * 
+     *
+     * @var date
+     *
      * @ORM\Column(type="date")
-     * 
+     *
      * @Assert\Type(type="date")
      */
     private $birthday;
 
     /**
      * User.
-     * 
+     *
      * @var User
-     * 
+     *
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="userData", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
@@ -77,11 +80,11 @@ class UserData
 
     /**
      * Blocked.
-     * 
-     * @var boolean
-     * 
+     *
+     * @var bool
+     *
      * @ORM\Column(type="boolean")
-     * 
+     *
      * @Assert\Type(type="boolean")
      */
     private $blocked;

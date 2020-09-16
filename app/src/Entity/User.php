@@ -67,6 +67,8 @@ class User implements UserInterface
      *     length=180,
      *     unique=true
      * )
+     *
+     * @Assert\Type(type="email")
      */
     private $email;
 
@@ -88,23 +90,23 @@ class User implements UserInterface
 
     /**
      * Plain password.
-     * 
+     *
      * @var string
-     * 
+     *
      * @Assert\Length(max=4096)
      */
     private $plainPassword;
 
     /**
      * Nick.
-     * 
+     *
      * @var string
-     * 
+     *
      * @ORM\Column(
-     *      type="string", 
+     *      type="string",
      *      length=64,
      *      )
-     * 
+     *
      * @Assert\Length(max=64)
      * @Assert\Type(type="string")
      */
@@ -112,12 +114,12 @@ class User implements UserInterface
 
     /**
      * User Data.
-     * 
+     *
      * @var UserData
-     * 
+     *
      * @ORM\OneToOne(
-     *      targetEntity=UserData::class,   
-     *      mappedBy="user", 
+     *      targetEntity=UserData::class,
+     *      mappedBy="user",
      *      cascade={"persist", "remove"}
      *      )
      */
@@ -210,8 +212,6 @@ class User implements UserInterface
 
     /**
      * Setter for Password.
-     *
-     * @param string $password
      */
     public function setPassword(string $password): void
     {
@@ -287,8 +287,6 @@ class User implements UserInterface
 
     /**
      * Setter for User Data.
-     *
-     * @param UserData $userData
      */
     public function setUserData(UserData $userData): void
     {

@@ -43,10 +43,9 @@ class TapeType extends AbstractType
      * top most type. Type extensions can further modify the form.
      *
      * @param FormBuilderInterface $builder The form builder
-     * @param array $options The options
+     * @param array                $options The options
      *
      * @see FormTypeExtensionInterface::buildForm()
-     *
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -87,10 +86,6 @@ class TapeType extends AbstractType
         $builder->get('tags')->addModelTransformer(
             $this->tagsDataTransformer
         );
-
-        $builder->add('image', ImageType::class, [
-            'label' => 'Image'
-        ]);
     }
 
     /**
@@ -115,5 +110,4 @@ class TapeType extends AbstractType
     {
         return 'tape';
     }
-
 }

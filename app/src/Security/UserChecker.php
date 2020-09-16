@@ -5,14 +5,13 @@
 
 namespace App\Security;
 
-use Exception;
 use App\Entity\User as AppUser;
+use Symfony\Component\Security\Core\Exception\DisabledException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\Exception\DisabledException;
 
 /**
- * Class UserChecker
+ * Class UserChecker.
  */
 class UserChecker implements UserCheckerInterface
 {

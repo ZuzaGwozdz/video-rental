@@ -2,6 +2,7 @@
 /**
  * Category repository.
  */
+
 namespace App\Repository;
 
 use App\Entity\Category;
@@ -34,6 +35,7 @@ class CategoryRepository extends ServiceEntityRepository
 
     /**
      * CategoryRepository constructor.
+     *
      * @param ManagerRegistry $registry Manager registry
      */
     public function __construct(ManagerRegistry $registry)

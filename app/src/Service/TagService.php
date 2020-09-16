@@ -34,8 +34,8 @@ class TagService
     /**
      * TagService constructor.
      *
-     * @param TagRepository $tagRepository Tag repository
-     * @param PaginatorInterface $paginator          Paginator
+     * @param TagRepository      $tagRepository Tag repository
+     * @param PaginatorInterface $paginator     Paginator
      */
     public function __construct(TagRepository $tagRepository, PaginatorInterface $paginator)
     {
