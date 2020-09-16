@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_account_index'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title_account_index'|trans }}</h1>
+
+    {% if user is defined and user|length %}
+        <dl class="dl-horizontal">
+            <dt>{{ 'label_email'|trans }}</dt>
+            <dd>{{ user.email }}</dd>
+            <dt>{{ 'label_nick'|trans }}</dt>
+            <dd>{{ user.nick }}</dd>
+            {% if user.userData is defined and user.userData|length %}
+                <dt>{{ 'label_name'|trans }}</dt>
+                <dd>{{ user.userData.name }}</dd>
+                <dt>{{ 'label_surname'|trans }}</dt>
+                <dd>{{ user.userData.surname }}</dd>
+                <dt>{{ 'label_birthday'|trans }}</dt>
+                <dd>{{ user.userData.birthday|format_date('long') }}</dd>
+            {% endif %}
+        </dl>
+        
+        <p>
+            <a href="{{ url('account_edit')}}" class="btn btn-primary" title="{{ 'action_edit'|trans }}">{{ 'action_edit'|trans }}</a>
+        </p>
+        <p>
+            <a href="{{ url('account_reset')}}" class="btn btn-primary" title="{{ 'action_reset_password'|trans }}">{{ 'action_reset_password'|trans }}</a>
+        </p>
+    {% else %}
+        <p>
+            {{ 'message_item_not_found'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}

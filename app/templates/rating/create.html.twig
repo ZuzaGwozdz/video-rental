@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ tape.title|default('') }}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <a href="{{ url('tape_index') }}" title="{{ 'action_back_to_list'|trans }}">{{ 'action_back_to_list'|trans }}</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-9 text-info">
+            <h1>{{ tape.title|default('') }}</h1>
+        </div>
+    </div>
+    {{ form_start(form) }}
+        {{ form_row(form.note) }}
+        <button class="btn btn-primary">{{ 'action_save'|trans }}</button>
+    {{ form_end(form) }}
+    
+    
+{% endblock %}

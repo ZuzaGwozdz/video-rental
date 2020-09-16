@@ -1,0 +1,8 @@
+{% include 'default/_form.html.twig' with {
+    page_title: 'title_account_edit',
+    attr: {
+        method: 'PUT',
+        action: url('account_edit'),
+    },
+    back_path: 'account_index',
+} %}

@@ -1,0 +1,9 @@
+{% include 'default/_form.html.twig' with {
+    page_title: 'title_reservation_confirm',
+    page_title_param: {'%id%': reservation.id},
+    attr: {
+        method: 'PUT',
+        action: url('reservation_confirm', {'id': reservation.id}),
+    },
+    back_to_list_path: 'reservation_index',
+} %}

@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_tapes_list'|trans }}
+{% endblock %}
+
+{% block body %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+    <p>
+        <a href="{{ url('tape_create') }}" title="{{ 'action_add'|trans }}">{{ 'action_add'|trans }}</a>
+    </p>
+    {% endif %}
+
+    <h1>{{ 'title_tapes_list'|trans }}</h1>
+    {% if pagination is defined and pagination.items|length %}
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'label_title'|trans, 'tape.title') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_created_at'|trans, 'tape.createdAt') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_updated_at'|trans, 'tape.updatedAt') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_category'|trans, 'category.title') }}</th>
+                {% if is_granted('ROLE_USER') %}
+                <th>{{'label_rating'|trans }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_availability'|trans, 'tape.availability') }}</th>
+                {% endif %}
+                <th>{{ 'label_actions'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody class="table-info">
+            {% for tape in pagination.items %}
+                <tr>
+                    <td>{{ tape.title }}</td>
+                    <td>{{ tape.createdAt|format_date('long') }}</td>
+                    <td>{{ tape.updatedAt|format_date('long') }}</td>
+                    <td><a href="{{ url('tape_index', {'filters' : {'category' : tape.category.id}}) }}" title="{{ tape.category.title }}">
+                            {{ tape.category.title }}
+                        </a>
+                    </td>
+                    {% if is_granted('ROLE_USER') %}
+                        {% if tape.ratings|length %}
+                            <td>{{ tape.rating|rating(5, "fa-9x") }}</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %} 
+                        {% if tape.availability == 0 %}
+                            <td>{{ 'label_no'|trans }}</td>
+                        {% else %}
+                            <td>{{ 'label_yes'|trans }}</td>
+                        {% endif %}
+                    {% endif %}
+                    <td>
+                        <a href="{{ url('tape_show', {id: tape.id}) }}" title="{{ 'action_view'|trans }}">
+                            {{ 'action_view'|trans }}
+                        </a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <br><a href="{{ url('tape_edit', {id: tape.id}) }}" title="{{ 'action_edit'|trans }}">
+                                {{ 'action_edit'|trans }}
+                            </a>
+                            <br><a href="{{ url('tape_delete', {id: tape.id}) }}" title="{{ 'action_delete'|trans }}">
+                                {{ 'action_delete'|trans }}
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+        
+    {% else %}
+        <p>
+            {{ 'message_empty_list'|trans }}
+        </p>
+    {% endif %}
+{% endblock  %}

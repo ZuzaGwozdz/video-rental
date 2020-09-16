@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_user_list'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title_user_list'|trans }}</h1>
+    {% if pagination is defined and pagination.items|length %}
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'label_id'|trans, 'user.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_email'|trans, 'user.email') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_nick'|trans, 'user.nick') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_blocked'|trans, 'user.blocked') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_name'|trans, 'user.userData.name') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_surname'|trans, 'user.userData.surname') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label_birthday'|trans, 'user.userData.birthday') }}</th>
+                <th>{{ 'label_actions'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in pagination.items %}
+            {% if user != app.user %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.nick }}</td>
+                    {% if user.userData.blocked == 0 %}
+                        <td>{{ 'label_no'|trans }}</td>
+                    {% else %}
+                        <td>{{ 'label_yes'|trans }}</td>
+                    {% endif %}
+                    <td>{{ user.userData.name }}</td>
+                    <td>{{ user.userData.surname }}</td>
+                    <td>{{ user.userData.birthday|format_date('long') }}</td>
+                    <td>
+                        <a href="{{ url('user_show', {id: user.id}) }}" title="{{ 'action_view'|trans }}">{{ 'action_view'|trans }}</a>
+                        <a href="{{ url('user_edit', {id: user.id}) }}" title="{{ 'action_edit'|trans }}">{{ 'action_edit'|trans }}</a>
+                        {% if user.userData is null or user.userData.blocked == 0 %}
+                            <a href="{{ url('user_block', {id: user.id}) }}" title="{{ 'action_block'|trans }}">{{ 'action_block'|trans }}</a>
+                        {% else %}
+                           <a href="{{ url('user_block', {id: user.id}) }}" title="{{ 'action_unblock'|trans }}">{{ 'action_unblock'|trans }}</a> 
+                        {% endif %}
+                        <a href="{{ url('user_delete', {id: user.id}) }}" title="{{ 'action_delete'|trans }}">{{ 'action_delete'|trans }}</a>
+                    </td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+    {% else %}
+        <p>
+            {% include 'default/_single_flash_message.html.twig' with {
+                type: 'warning',
+                message: 'message_empty_list'|trans
+            } %}
+        </p>
+    {% endif %}
+{% endblock  %}

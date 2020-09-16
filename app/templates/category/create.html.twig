@@ -1,0 +1,8 @@
+{% include 'default/_form.html.twig' with {
+    page_title: 'title_category_create',
+    attr: {
+        method: 'POST',
+        action: url('category_create')
+    },
+    back_to_list_path: 'category_index',
+} %}
