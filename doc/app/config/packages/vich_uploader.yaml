@@ -1,8 +1,0 @@
-vich_uploader:
-    db_driver: orm
-
-    mappings:
-        tape_image:
-            uri_prefix: /images/tapes
-            upload_destination: '%kernel.project_dir%/public/images/tapes'
-            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

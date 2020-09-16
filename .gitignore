@@ -1,7 +1,5 @@
 .docker
 .idea
 data
-docs
-vendor
-composer.json
-composer.lock
+doc
+!doc/app
